@@ -2,35 +2,38 @@ var electron = require('electron');
 var app = electron.app;
 var Menu = electron.Menu;
 var Tray = electron.Tray;
+var BrowserWindow = electron.BrowserWindow;
 
-var Desktopr = require('./desktopr.js');
 var fs = require('fs');
 var request = require('request');
 var winston = require('winston');
 var wallpaper = require('wallpaper');
+var Desktopr = require('desktopr');
 
 var PATH = __dirname;
 var IMAGES_PATH = PATH + '/images/';
 var ICONS_PATH = PATH + '/icons/';
 
+var contextMenu = Menu.buildFromTemplate([
+  { label: 'Show gallery...', click: showGallery },
+  {
+    label: 'Change background each',
+    submenu: [
+      { label: '1 hour' },
+      { label: '30 minutes' },
+      { label: '15 minutes' },
+      { label: '5 minutes' },
+      { label: '1 minute' }
+    ]
+  },
+  { type: 'separator' },
+  { label: 'Quit', click: exit }
+]);
+
 app.on('ready', function () {
 
+  showGallery();
   tray = new Tray(ICONS_PATH + 'IconTemplate.png');
-  var contextMenu = Menu.buildFromTemplate([
-    { label: 'Show gallery...' },
-    {
-      label: 'Change background automatically each',
-      submenu: [
-        { label: '1 hour' },
-        { label: '30 minutes' },
-        { label: '15 minutes' },
-        { label: '5 minutes' },
-        { label: '1 minute' }
-      ]
-    },
-    { type: 'separator' },
-    { label: 'Quit', click: exit }
-  ]);
 
   fs.exists(IMAGES_PATH, function (exists) {
     if (!exists) fs.mkdir(IMAGES_PATH);
@@ -67,6 +70,24 @@ app.on('ready', function () {
   });
 });
 
+// Do not quit when all windows are closed
+app.on('window-all-closed', function () {});
+
+/********************** Functions **********************/
+
 function exit() {
   app.quit();
 };
+
+function showGallery() {
+  galleryWindow = new BrowserWindow({
+    height: 800,
+    width: 600
+  });
+
+  galleryWindow.loadURL('file://' + __dirname + '/views/html/gallery.html');
+
+  galleryWindow.on('closed', function () {
+    galleryWindow = null;
+  });
+}

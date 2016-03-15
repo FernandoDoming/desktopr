@@ -1,12 +1,13 @@
 {
-  "name": "example-menubar-app",
-  "version": "1.0.0",
+  "name": "desktopr",
+  "version": "0.0.1",
   "description": "example menubar electron app",
   "dependencies": {
     "electron": "0.4.1",
     "500px": "0.5.1",
     "winston": "2.2.0",
-    "wallpaper": "2.1.0"
+    "wallpaper": "2.1.0",
+    "jquery": "2.2.1"
   },
   "devDependencies": {
     "electron-packager": "^5.1.0",
@@ -19,5 +20,11 @@
     "build_win": "electron-packager . Desktopr --platform=win32 --arch=x64 --version=0.36.0 --icon=Icon.icns",
     "build_linux": "electron-packager . Desktopr --platform=linux --arch=x64 --version=0.36.0 --icon=Icon.icns",
     "start": "electron ."
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": " "
+  },
+  "author": "Fernando Domínguez",
+  "license": "ISC"
 }
