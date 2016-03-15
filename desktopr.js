@@ -3,7 +3,7 @@ var winston = require('winston');
 var API500px = require('500px');
 var api500px = new API500px('9FNw3T1ywcR5PC0LMsTxrsSm6CH47HAYENQvh81L');
 
-var RPP = 30;
+var RPP = 50;
 var FEATURES = ['Editors', 'Popular'];
 var _this;
 
@@ -32,12 +32,33 @@ function Desktopr() {
       image_size: 2048,
     }, fetchImage);
   };
+
+  this.fetchPopularData = function () {
+    api500px.photos.getPopular({
+      sort: 'created_at',
+      rpp: RPP,
+      image_size: 2048,
+    }, fetchData);
+
+    this.fetchEditorsData = function () {
+      api500px.photos.getEditorsChoice({
+        sort: 'created_at',
+        rpp: RPP,
+        image_size: 2048,
+      }, fetchData);
+  };
 }
 
 Desktopr.prototype.__proto__ = events.EventEmitter.prototype;
 
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+function fetchData(error, results) {
+
+  if (error) {
+    winston.error('[x] 500px returned error ' + error.code + ': ' + error.message);
+    return;
+  }
+
+  _this.emit('fetch', results);
 }
 
 function fetchImage(error, results) {
@@ -58,6 +79,10 @@ function fetchImage(error, results) {
   }
 
   _this.emit('fetch', background);
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 module.exports = Desktopr;
