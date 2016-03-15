@@ -39,7 +39,7 @@ app.on('ready', function () {
         request(background.image_url).pipe(stream).on('close', function () {
           wallpaper.set(IMAGE_FILE).then(function () {
 
-            mb.setOption('icon', ICONS_PATH + '/IconTemplate.png');
+            tray.setImage(ICONS_PATH + '/IconTemplate.png');
             winston.info('[*] Set wallpaper ' + IMAGE_FILE);
 
             // Delete the file to comply with 500px API terms
@@ -50,7 +50,7 @@ app.on('ready', function () {
 
       winston.info('[*] Getting images...');
       service.newBackground();
-      mb.setOption('icon', ICONS_PATH + '/IconDownload.png');
+      tray.setImage(ICONS_PATH + '/IconDownload.png');
     }
   });
 });
