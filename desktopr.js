@@ -39,13 +39,14 @@ function Desktopr() {
       rpp: RPP,
       image_size: 2048,
     }, fetchData);
+  };
 
-    this.fetchEditorsData = function () {
-      api500px.photos.getEditorsChoice({
-        sort: 'created_at',
-        rpp: RPP,
-        image_size: 2048,
-      }, fetchData);
+  this.fetchEditorsData = function () {
+    api500px.photos.getEditorsChoice({
+      sort: 'created_at',
+      rpp: RPP,
+      image_size: 2048,
+    }, fetchData);
   };
 }
 

@@ -8,7 +8,7 @@ var fs = require('fs');
 var request = require('request');
 var winston = require('winston');
 var wallpaper = require('wallpaper');
-var Desktopr = require('desktopr');
+var Desktopr = require('./desktopr.js');
 
 var PATH = __dirname;
 var IMAGES_PATH = PATH + '/images/';
