@@ -17,6 +17,18 @@ app.on('ready', function () {
 
   tray = new Tray(ICONS_PATH + 'IconTemplate.png');
   var contextMenu = Menu.buildFromTemplate([
+    { label: 'Show gallery...' },
+    {
+      label: 'Change background automatically each',
+      submenu: [
+        { label: '1 hour' },
+        { label: '30 minutes' },
+        { label: '15 minutes' },
+        { label: '5 minutes' },
+        { label: '1 minute' }
+      ]
+    },
+    { type: 'separator' },
     { label: 'Quit', click: exit }
   ]);
 
