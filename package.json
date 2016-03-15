@@ -1,0 +1,23 @@
+{
+  "name": "example-menubar-app",
+  "version": "1.0.0",
+  "description": "example menubar electron app",
+  "dependencies": {
+    "menubar": "*",
+    "500px": "0.5.1",
+    "winston": "2.2.0",
+    "wallpaper": "2.1.0"
+  },
+  "devDependencies": {
+    "electron-packager": "^5.1.0",
+    "electron-prebuilt": "^0.36.0"
+  },
+  "main": "main.js",
+  "scripts": {
+    "build": "./make_dist.sh",
+    "build_mac": "electron-packager . Desktopr --platform=darwin --arch=x64 --version=0.36.0 --icon=Icon.icns",
+    "build_win": "electron-packager . Desktopr --platform=win32 --arch=x64 --version=0.36.0 --icon=Icon.icns",
+    "build_linux": "electron-packager . Desktopr --platform=linux --arch=x64 --version=0.36.0 --icon=Icon.icns",
+    "start": "electron ."
+  }
+}
