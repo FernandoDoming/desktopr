@@ -1,9 +1,9 @@
 var events = require('events');
 var winston = require('winston');
 var API500px = require('500px');
-var api500px = new API500px('9FNw3T1ywcR5PC0LMsTxrsSm6CH47HAYENQvh81L');
+var api500px = new API500px('yourKeyHere');
 
-var RPP = 30;
+var RPP = 50;
 var FEATURES = ['Editors', 'Popular'];
 var _this;
 

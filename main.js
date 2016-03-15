@@ -1,19 +1,20 @@
 var menubar = require('menubar');
-var locus = require('locus');
 var Desktopr = require('./desktopr.js');
 var fs = require('fs');
 var request = require('request');
 var winston = require('winston');
-const wallpaper = require('wallpaper');
+var wallpaper = require('wallpaper');
 
-var IMAGES_PATH = __dirname + '/images/';
 var PATH = __dirname;
+var IMAGES_PATH = PATH + '/images/';
+var ICONS_PATH = PATH + '/icons/';
 
 var mb = menubar({
   height: 100,
   width: 200,
   index: null,
   tooltip: 'Alt click me for options',
+  icon: ICONS_PATH + 'IconTemplate.png'
 });
 
 mb.on('ready', function ready() {
@@ -32,18 +33,18 @@ mb.on('show', function () {
     request(background.image_url).pipe(stream).on('close', function () {
       wallpaper.set(IMAGE_FILE).then(function () {
 
-        mb.setOption('icon', PATH + '/IconTemplate.png');
+        mb.setOption('icon', ICONS_PATH + '/IconTemplate.png');
         winston.info('[*] Set wallpaper ' + IMAGE_FILE);
 
         // Delete the file to comply with 500px API terms
-        //fs.unlink(IMAGE_FILE);
+        fs.unlink(IMAGE_FILE);
       });
     });
   });
 
   winston.info('[*] Getting images...');
   service.newBackground();
-  mb.setOption('icon', PATH + '/IconDownload.png');
+  mb.setOption('icon', ICONS_PATH + '/IconDownload.png');
 });
 
 mb.on('after-show', function () {
