@@ -1,4 +1,8 @@
-var menubar = require('menubar');
+var electron = require('electron');
+var app = electron.app;
+var Menu = electron.Menu;
+var Tray = electron.Tray;
+
 var Desktopr = require('./desktopr.js');
 var fs = require('fs');
 var request = require('request');
@@ -9,44 +13,48 @@ var PATH = __dirname;
 var IMAGES_PATH = PATH + '/images/';
 var ICONS_PATH = PATH + '/icons/';
 
-var mb = menubar({
-  height: 100,
-  width: 200,
-  index: null,
-  tooltip: 'Alt click me for options',
-  icon: ICONS_PATH + 'IconTemplate.png'
-});
+app.on('ready', function () {
 
-mb.on('ready', function ready() {
+  tray = new Tray(ICONS_PATH + 'IconTemplate.png');
+  var contextMenu = Menu.buildFromTemplate([
+    { label: 'Quit', click: exit }
+  ]);
+
   fs.exists(IMAGES_PATH, function (exists) {
     if (!exists) fs.mkdir(IMAGES_PATH);
   });
-});
 
-mb.on('show', function () {
-  var service = new Desktopr();
-  service.on('fetch', function (background) {
+  tray.on('click', function (event) {
 
-    winston.info('[*] Got a picture: ' + background.id + '. Saving to disk...');
-    const IMAGE_FILE = IMAGES_PATH + background.id + '.' + background.image_format;
-    var stream = fs.createWriteStream(IMAGE_FILE);
-    request(background.image_url).pipe(stream).on('close', function () {
-      wallpaper.set(IMAGE_FILE).then(function () {
+    if (event.altKey) {
+      tray.popUpContextMenu(contextMenu);
 
-        mb.setOption('icon', ICONS_PATH + '/IconTemplate.png');
-        winston.info('[*] Set wallpaper ' + IMAGE_FILE);
+    } else {
+      var service = new Desktopr();
+      service.on('fetch', function (background) {
 
-        // Delete the file to comply with 500px API terms
-        fs.unlink(IMAGE_FILE);
+        winston.info('[*] Got a picture: ' + background.id + '. Saving to disk...');
+        const IMAGE_FILE = IMAGES_PATH + background.id + '.' + background.image_format;
+        var stream = fs.createWriteStream(IMAGE_FILE);
+        request(background.image_url).pipe(stream).on('close', function () {
+          wallpaper.set(IMAGE_FILE).then(function () {
+
+            mb.setOption('icon', ICONS_PATH + '/IconTemplate.png');
+            winston.info('[*] Set wallpaper ' + IMAGE_FILE);
+
+            // Delete the file to comply with 500px API terms
+            fs.unlink(IMAGE_FILE);
+          });
+        });
       });
-    });
+
+      winston.info('[*] Getting images...');
+      service.newBackground();
+      mb.setOption('icon', ICONS_PATH + '/IconDownload.png');
+    }
   });
-
-  winston.info('[*] Getting images...');
-  service.newBackground();
-  mb.setOption('icon', ICONS_PATH + '/IconDownload.png');
 });
 
-mb.on('after-show', function () {
-  mb.hideWindow();
-});
+function exit() {
+  app.quit();
+};
