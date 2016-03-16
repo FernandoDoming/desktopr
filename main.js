@@ -5,6 +5,7 @@ var Tray = require('tray');
 var BrowserWindow = require('browser-window');
 
 var fs = require('fs');
+var ipc = require('ipc');
 var request = require('request');
 var winston = require('winston');
 var wallpaper = require('wallpaper');
@@ -52,14 +53,7 @@ app.on('ready', function () {
         const IMAGE_FILE = IMAGES_PATH + background.id + '.' + background.image_format;
         var stream = fs.createWriteStream(IMAGE_FILE);
         request(background.image_url).pipe(stream).on('close', function () {
-          wallpaper.set(IMAGE_FILE).then(function () {
-
-            tray.setImage(ICONS_PATH + '/IconTemplate.png');
-            winston.info('[*] Set wallpaper ' + IMAGE_FILE);
-
-            // Delete the file to comply with 500px API terms
-            fs.unlink(IMAGE_FILE);
-          });
+          setWallpaper(IMAGE_FILE);
         });
       });
 
@@ -72,6 +66,10 @@ app.on('ready', function () {
 
 // Do not quit when all windows are closed
 app.on('window-all-closed', function () {});
+
+ipc.on('set-background', function (event, data) {
+  winston.info('[*] Requested to get ' + data.id);
+});
 
 /********************** Functions **********************/
 
@@ -89,5 +87,16 @@ function showGallery() {
 
   galleryWindow.on('closed', function () {
     galleryWindow = null;
+  });
+}
+
+function setWallpaper(image) {
+  wallpaper.set(image).then(function () {
+
+    tray.setImage(ICONS_PATH + '/IconTemplate.png');
+    winston.info('[*] Set wallpaper ' + IMAGE_FILE);
+
+    // Delete the file to comply with 500px API terms
+    fs.unlink(image);
   });
 }

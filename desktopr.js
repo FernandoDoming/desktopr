@@ -32,35 +32,9 @@ function Desktopr() {
       image_size: 2048,
     }, fetchImage);
   };
-
-  this.fetchPopularData = function () {
-    api500px.photos.getPopular({
-      sort: 'created_at',
-      rpp: RPP,
-      image_size: 2048,
-    }, fetchData);
-  };
-
-  this.fetchEditorsData = function () {
-    api500px.photos.getEditorsChoice({
-      sort: 'created_at',
-      rpp: RPP,
-      image_size: 2048,
-    }, fetchData);
-  };
 }
 
 Desktopr.prototype.__proto__ = events.EventEmitter.prototype;
-
-function fetchData(error, results) {
-
-  if (error) {
-    winston.error('[x] 500px returned error ' + error.code + ': ' + error.message);
-    return;
-  }
-
-  _this.emit('fetch', results);
-}
 
 function fetchImage(error, results) {
 
