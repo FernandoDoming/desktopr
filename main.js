@@ -1,8 +1,8 @@
 var electron = require('electron');
-var app = electron.app;
-var Menu = electron.Menu;
-var Tray = electron.Tray;
-var BrowserWindow = electron.BrowserWindow;
+var app = require('app');
+var Menu = require('menu');
+var Tray = require('tray');
+var BrowserWindow = require('browser-window');
 
 var fs = require('fs');
 var request = require('request');

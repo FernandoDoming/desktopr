@@ -2,13 +2,34 @@
   <head>
     <title>Desktopr - Gallery</title>
     <link rel="stylesheet" href="../css/gallery.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
   </head>
   <body>
     <div class="images">
 
     </div>
+
+    <!-- Scripts -->
     <script type="text/javascript" src="../js/masonry.js"></script>
     <script type="text/javascript" src="../js/500px.js"></script>
     <script type="text/javascript" src="../js/gallery.js"></script>
+
+    <!-- Templates -->
+    <script id="image-template" type="text/x-handlebars-template">
+      <div class="image-block">
+        <div class="overlay">
+          <h3 class="title">{{title}}</h3>
+          <div class="actions">
+            <a class="set-background" href="#">
+              <span class="glyphicon glyphicon-picture"></span>
+            </a>
+          </div>
+        </div>
+        <div class="body">
+          <img src="{{src}}" alt="" width="100%" style="">
+        </div>
+      </div>
+    </script>
   </body>
 </html>

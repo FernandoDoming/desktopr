@@ -1,6 +1,7 @@
 var ipc = require('ipc');
 var $   = require('jquery');
 var Masonry = require('masonry-layout');
+var Handlebars = require('handlebars');
 
 var RPP = 50;
 
@@ -10,14 +11,19 @@ $(document).ready(function () {
   });
 
   _500px.api('/photos', { feature: 'editors', page: 1, rpp: RPP, image_size: 20 }, function (response) {
+    console.log(response.data.photos);
 
+    var source   = $("#image-template").html();
+    var template = Handlebars.compile(source);
     response.data.photos.forEach(function (photo) {
-      $('.images').append("<img src='" + photo.image_url + "' width='50%'/>");
+      var context = {title: photo.name, src: photo.image_url};
+      var html    = template(context);
+      $('.images').append(html);
     });
 
     var container = document.querySelector('.images');
     var masonry = new Masonry(container, {
-      itemSelector: 'img'
+      itemSelector: '.image-block'
     });
   });
 

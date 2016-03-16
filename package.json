@@ -8,7 +8,8 @@
     "winston": "2.2.0",
     "wallpaper": "2.1.0",
     "jquery": "2.2.1",
-    "masonry-layout": "4.0.0"
+    "masonry-layout": "4.0.0",
+    "handlebars": "4.0.5"
   },
   "devDependencies": {
     "electron-packager": "^5.1.0",
