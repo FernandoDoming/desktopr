@@ -15,6 +15,9 @@ var PATH = __dirname;
 var IMAGES_PATH = PATH + '/images/';
 var ICONS_PATH = PATH + '/icons/';
 
+var tray = null;
+var service = null;
+
 var contextMenu = Menu.buildFromTemplate([
   { label: 'Show gallery...', click: showGallery },
   {
@@ -33,8 +36,11 @@ var contextMenu = Menu.buildFromTemplate([
 
 app.on('ready', function () {
 
-  showGallery();
   tray = new Tray(ICONS_PATH + 'IconTemplate.png');
+  service = new Desktopr({
+    images_path: IMAGES_PATH
+  });
+  showGallery();
 
   fs.exists(IMAGES_PATH, function (exists) {
     if (!exists) fs.mkdir(IMAGES_PATH);
@@ -46,7 +52,6 @@ app.on('ready', function () {
       tray.popUpContextMenu(contextMenu);
 
     } else {
-      var service = new Desktopr();
       service.on('fetch', function (background) {
 
         winston.info('[*] Got a picture: ' + background.id + '. Saving to disk...');
@@ -69,6 +74,7 @@ app.on('window-all-closed', function () {});
 
 ipc.on('set-background', function (event, data) {
   winston.info('[*] Requested to get ' + data.id);
+  service.setBackgroundById(data.id);
 });
 
 /********************** Functions **********************/
@@ -94,7 +100,7 @@ function setWallpaper(image) {
   wallpaper.set(image).then(function () {
 
     tray.setImage(ICONS_PATH + '/IconTemplate.png');
-    winston.info('[*] Set wallpaper ' + IMAGE_FILE);
+    winston.info('[*] Set wallpaper ' + image);
 
     // Delete the file to comply with 500px API terms
     fs.unlink(image);

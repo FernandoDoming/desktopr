@@ -11,7 +11,10 @@ $(document).ready(function () {
     sdk_key: '93b63bb139a91188c29062455158bdf377ff9b75'
   });
 
-  _500px.api('/photos', { feature: 'editors', page: 1, rpp: RPP, image_size: 20 }, function (response) {
+  _500px.api('/photos', { feature: 'editors', page: 1, rpp: RPP, image_size: 20 }, appendImages);
+  _500px.api('/photos', { feature: 'popular', page: 1, rpp: RPP, image_size: 20 }, appendImages);
+
+  function appendImages(response) {
     console.log(response.data.photos);
 
     var source   = $("#image-template").html();
@@ -37,6 +40,5 @@ $(document).ready(function () {
       var id = $(this).closest('.image-block').data('id');
       ipc.send('set-background', { id: id });
     });
-  });
-
+  }
 });

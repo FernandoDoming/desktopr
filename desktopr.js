@@ -1,5 +1,8 @@
 var events = require('events');
 var winston = require('winston');
+var wallpaper = require('wallpaper');
+var fs = require('fs');
+var request = require('request');
 var API500px = require('500px');
 var api500px = new API500px('9FNw3T1ywcR5PC0LMsTxrsSm6CH47HAYENQvh81L');
 
@@ -7,17 +10,22 @@ var RPP = 50;
 var FEATURES = ['Editors', 'Popular'];
 var _this;
 
-function Desktopr() {
+function Desktopr(options) {
+  options = typeof options !== 'undefined' ? options : {};
   _this = this;
-  events.EventEmitter.call(this);
+  events.EventEmitter.call(_this);
 
-  this.newBackground = function () {
-    var feature = FEATURES[Math.floor(Math.random() * FEATURES.length)];
-    winston.info('[*] Getting image from ' + feature);
-    this['new' + feature + 'Background']();
+  this.options = {
+    images_path: options.images_path || __dirname + '/images/'
   };
 
-  this.newPopularBackground = function () {
+  _this.newBackground = function () {
+    var feature = FEATURES[Math.floor(Math.random() * FEATURES.length)];
+    winston.info('[*] Getting image from ' + feature);
+    _this['new' + feature + 'Background']();
+  };
+
+  _this.newPopularBackground = function () {
     api500px.photos.getPopular({
       sort: 'created_at',
       rpp: RPP,
@@ -25,13 +33,22 @@ function Desktopr() {
     }, fetchImage);
   };
 
-  this.newEditorsBackground = function () {
+  _this.newEditorsBackground = function () {
     api500px.photos.getEditorsChoice({
       sort: 'created_at',
       rpp: RPP,
       image_size: 2048,
     }, fetchImage);
   };
+
+  _this.newBackgroundById = function (id) {
+    api500px.photos.getById( id, { image_size: 2048 }, fetchImage);
+  };
+
+  _this.setBackgroundById = function (id) {
+    api500px.photos.getById( id, { image_size: 2048 }, setBackground);
+  };
+
 }
 
 Desktopr.prototype.__proto__ = events.EventEmitter.prototype;
@@ -45,15 +62,45 @@ function fetchImage(error, results) {
 
   var search = true;
   var background = null;
-  while (search) {
-    var photo = results.photos[getRandomInt(0, RPP)];
-    if (photo.width > photo.height) {
-      search = false;
-      background = photo;
+  if (results.photos != undefined) {
+    while (search) {
+      var photo = results.photos[getRandomInt(0, results.photos.length-1)];
+      if (photo.width > photo.height) {
+        search = false;
+        background = photo;
+      }
     }
+  } else if (results.photo != undefined) {
+    background = results.photo;
   }
 
+  winston.debug('[+] Got ' + background.id + '. Emitting fetch...');
   _this.emit('fetch', background);
+}
+
+function setBackground(error, results) {
+
+  if (error) {
+    winston.error('[x] 500px returned error ' + error.code + ': ' + error.message);
+    return;
+  }
+
+  var image = results.photo;
+  winston.info('[*] Got a picture: ' + image.id + '. Saving to disk...');
+
+  const IMAGE_FILE = _this.options.images_path + image.id + '.' + image.image_format;
+  var stream = fs.createWriteStream(IMAGE_FILE);
+  request(image.image_url).pipe(stream).on('close', function () {
+    winston.info('[*] Saved ' + image.id + ' to disk')
+    wallpaper.set(IMAGE_FILE).then(function () {
+
+      //tray.setImage(ICONS_PATH + '/IconTemplate.png');
+      winston.info('[*] Set wallpaper ' + image);
+
+      // Delete the file to comply with 500px API terms
+      fs.unlink(image);
+    });
+  });
 }
 
 function getRandomInt(min, max) {
