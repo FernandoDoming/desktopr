@@ -23,7 +23,9 @@ $(document).ready(function () {
       var context = {
         title: photo.name,
         src: photo.image_url,
-        id: photo.id
+        id: photo.id,
+        author: photo.user.firstname,
+        resolution: photo.width + 'x' + photo.height
       };
       var html    = template(context);
       $('.images').append(html);

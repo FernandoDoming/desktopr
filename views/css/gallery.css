@@ -22,12 +22,29 @@ body{
 }
 
 .overlay .title{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  padding: 1%;
+  font-weight: 900;
+  font-size: 20px;
+}
+
+.overlay div,
+.overlay .title{
   text-align: center;
   color: white;
 }
 
+.overlay .footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 1%;
+}
+
 .overlay .actions{
-  text-align: center;
+  padding: 5% 0;
 }
 
 .overlay .actions a{
