@@ -10,7 +10,8 @@
     "jquery": "2.2.1",
     "masonry-layout": "4.0.0",
     "imagesloaded": "4.1.0",
-    "handlebars": "4.0.5"
+    "handlebars": "4.0.5",
+    "yamljs": "0.2.6"
   },
   "devDependencies": {
     "electron-packager": "^5.1.0",

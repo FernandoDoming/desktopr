@@ -10,6 +10,7 @@ var request = require('request');
 var winston = require('winston');
 var wallpaper = require('wallpaper');
 var Desktopr = require('./desktopr.js');
+var Settings = require('./settings.js');
 
 var PATH = __dirname;
 var IMAGES_PATH = PATH + '/images/';
@@ -30,6 +31,8 @@ var contextMenu = Menu.buildFromTemplate([
       { label: '1 minute' }
     ]
   },
+  { type: 'separator' },
+  { label: 'Options', click: showOptions },
   { type: 'separator' },
   { label: 'Quit', click: exit }
 ]);
@@ -72,6 +75,8 @@ app.on('ready', function () {
 // Do not quit when all windows are closed
 app.on('window-all-closed', function () {});
 
+
+// IPC events
 ipc.on('set-background', function (event, data) {
   winston.info('[*] Requested to get ' + data.id);
   service.setBackgroundById(data.id);
@@ -93,6 +98,29 @@ function showGallery() {
 
   galleryWindow.on('closed', function () {
     galleryWindow = null;
+  });
+}
+
+function showOptions() {
+  optionsWindow = new BrowserWindow({
+    height: 400,
+    width: 400
+  });
+
+  optionsWindow.loadURL('file://' + __dirname + '/views/html/options.html');
+
+  var settings = Settings.load();
+
+  ipc.on('request-settings', function (event, data) {
+    event.sender.send('init-settings', settings);
+  });
+
+  ipc.on('set-option', function (event, data) {
+    
+  });
+
+  optionsWindow.on('closed', function () {
+    optionsWindow = null;
   });
 }
 
