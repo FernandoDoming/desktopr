@@ -46,7 +46,7 @@ app.on('ready', function () {
   });
   settings = Settings.load();
 
-  showOptions();
+  if (settings.open_gallery) showGallery();
 
   fs.exists(IMAGES_PATH, function (exists) {
     if (!exists) fs.mkdir(IMAGES_PATH);
