@@ -11,6 +11,6 @@ ipc.send('request-settings');
 $('input[type="checkbox"]').on('click', function () {
   ipc.send('set-option', {
     key: $(this).data('key'),
-    value: $(this).is('checked'),
+    value: $(this).is(':checked'),
   });
 });

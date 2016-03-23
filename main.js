@@ -18,6 +18,7 @@ var ICONS_PATH = PATH + '/icons/';
 
 var tray = null;
 var service = null;
+var settings = null;
 
 var contextMenu = Menu.buildFromTemplate([
   { label: 'Show gallery...', click: showGallery },
@@ -43,7 +44,9 @@ app.on('ready', function () {
   service = new Desktopr({
     images_path: IMAGES_PATH
   });
-  showGallery();
+  settings = Settings.load();
+
+  showOptions();
 
   fs.exists(IMAGES_PATH, function (exists) {
     if (!exists) fs.mkdir(IMAGES_PATH);
@@ -109,14 +112,13 @@ function showOptions() {
 
   optionsWindow.loadURL('file://' + __dirname + '/views/html/options.html');
 
-  var settings = Settings.load();
-
   ipc.on('request-settings', function (event, data) {
     event.sender.send('init-settings', settings);
   });
 
   ipc.on('set-option', function (event, data) {
-    
+    settings[data.key] = data.value;
+    Settings.save(settings);
   });
 
   optionsWindow.on('closed', function () {
