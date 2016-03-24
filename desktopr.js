@@ -16,7 +16,8 @@ function Desktopr(options) {
   events.EventEmitter.call(_this);
 
   this.options = {
-    images_path: options.images_path || __dirname + '/images/'
+    images_path: options.images_path || __dirname + '/images/',
+    allow_nsfw: options.allow_nsfw || false
   };
 
   _this.newBackground = function () {
@@ -65,6 +66,7 @@ function fetchImage(error, results) {
   if (results.photos != undefined) {
     while (search) {
       var photo = results.photos[getRandomInt(0, results.photos.length-1)];
+      if (photo.nsfw && !options.allow_nsfw) continue;
       if (photo.width > photo.height) {
         search = false;
         background = photo;

@@ -40,11 +40,21 @@ var contextMenu = Menu.buildFromTemplate([
 
 app.on('ready', function () {
 
+  settings = Settings.load();
   tray = new Tray(ICONS_PATH + 'IconTemplate.png');
   service = new Desktopr({
-    images_path: IMAGES_PATH
+    images_path: IMAGES_PATH,
+    allow_nsfw: settings.allow_nsfw
   });
-  settings = Settings.load();
+
+  service.on('fetch', function (background) {
+    winston.info('[*] Got a picture: ' + background.id + '. Saving to disk...');
+    const IMAGE_FILE = IMAGES_PATH + background.id + '.' + background.image_format;
+    var stream = fs.createWriteStream(IMAGE_FILE);
+    request(background.image_url).pipe(stream).on('close', function () {
+      setWallpaper(IMAGE_FILE);
+    });
+  });
 
   if (settings.open_gallery) showGallery();
 
@@ -56,18 +66,7 @@ app.on('ready', function () {
 
     if (event.altKey) {
       tray.popUpContextMenu(contextMenu);
-
     } else {
-      service.on('fetch', function (background) {
-
-        winston.info('[*] Got a picture: ' + background.id + '. Saving to disk...');
-        const IMAGE_FILE = IMAGES_PATH + background.id + '.' + background.image_format;
-        var stream = fs.createWriteStream(IMAGE_FILE);
-        request(background.image_url).pipe(stream).on('close', function () {
-          setWallpaper(IMAGE_FILE);
-        });
-      });
-
       winston.info('[*] Getting images...');
       service.newBackground();
       tray.setImage(ICONS_PATH + '/IconDownload.png');
@@ -77,7 +76,6 @@ app.on('ready', function () {
 
 // Do not quit when all windows are closed
 app.on('window-all-closed', function () {});
-
 
 // IPC events
 ipc.on('set-background', function (event, data) {

@@ -5,6 +5,13 @@ var Handlebars = require('handlebars');
 var imagesLoaded = require('imagesloaded');
 
 var RPP = 50;
+var settings = null;
+
+ipc.on('init-settings', function (opts) {
+  settings = opts;
+});
+
+ipc.send('request-settings');
 
 $(document).ready(function () {
   _500px.init({
@@ -20,12 +27,16 @@ $(document).ready(function () {
     var source   = $("#image-template").html();
     var template = Handlebars.compile(source);
     response.data.photos.forEach(function (photo) {
+
+      if(photo.nsfw && !settings.allow_nsfw) return;
+
       var context = {
         title: photo.name,
         src: photo.image_url,
         id: photo.id,
         author: photo.user.firstname,
-        resolution: photo.width + 'x' + photo.height
+        resolution: photo.width + 'x' + photo.height,
+        nsfw: photo.nsfw
       };
       var html    = template(context);
       $('.images').append(html);

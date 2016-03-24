@@ -1,8 +1,8 @@
-body{
+body {
   margin: 0;
 }
 
-.image-block{
+.image-block {
   display: inline;
   width: 50%;
 }
@@ -17,36 +17,46 @@ body{
     color: white;
 }
 
-.overlay:hover{
+.overlay:hover {
   opacity: 1;
 }
 
-.overlay .title{
+.overlay .header {
   position: absolute;
   top: 0;
   width: 100%;
   padding: 1%;
+}
+
+.overlay .header .title {
   font-weight: 900;
   font-size: 20px;
 }
 
 .overlay div,
-.overlay .title{
+.overlay .header .title {
   text-align: center;
   color: white;
 }
 
-.overlay .footer{
+.overlay .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   padding: 1%;
 }
 
-.overlay .actions{
+.overlay .actions {
   padding: 5% 0;
 }
 
-.overlay .actions a{
+.overlay .actions a {
   color: white;
+}
+
+.tag.nsfw {
+  padding: 3px 5px;
+  background-color: #bc234b;
+  border-radius: 3px;
+  font-size: 12px;
 }

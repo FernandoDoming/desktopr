@@ -20,7 +20,14 @@
     <script id="image-template" type="text/x-handlebars-template">
       <div class="image-block" data-id="{{id}}">
         <div class="overlay">
-          <h3 class="title">{{title}}</h3>
+          <div class="header">
+            <h3 class="title">{{title}}</h3>
+            <div id="tags">
+              {{#if nsfw}}
+                <span class="tag nsfw">NSFW</span>
+              {{/if}}
+            </div>
+          </div>
           <div class="footer">
             <div class="actions">
               <a class="set-background" href="#">
