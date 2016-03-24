@@ -24,6 +24,8 @@ $(document).ready(function () {
   function appendImages(response) {
     console.log(response.data.photos);
 
+    $('#loading').hide();
+
     var source   = $("#image-template").html();
     var template = Handlebars.compile(source);
     response.data.photos.forEach(function (photo) {
