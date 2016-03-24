@@ -1,0 +1,13 @@
+.settings {
+  padding: 0 5%;
+  font-family: sans-serif;
+}
+
+.settings h2 {
+  margin: 20px 0;
+}
+
+.settings .checkbox-opt {
+  margin: 5px 10px;
+  font-size: 15px;
+}
