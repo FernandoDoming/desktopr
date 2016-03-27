@@ -29,7 +29,11 @@ var service = null;
 var settings = null;
 var interval = null;
 
+var galleryWindow = null;
+var optionsWindow = null;
+
 var contextMenu = Menu.buildFromTemplate([
+  { label: 'Get a random wallpaper', click: function () { service.newBackground(); } },
   { label: 'Show gallery...', click: showGallery },
   {
     id: 'change_background',
@@ -40,7 +44,7 @@ var contextMenu = Menu.buildFromTemplate([
       { label: '30 minutes', type: 'radio', id: '30_min', click: function () { setUpdatePeriod('30_min'); } },
       { label: '15 minutes', type: 'radio', id: '15_min', click: function () { setUpdatePeriod('15_min'); } },
       { label: '5 minutes', type: 'radio', id: '5_min', click: function () { setUpdatePeriod('5_min'); } },
-      { label: '1 minute', type: 'radio', id: '1_min', click: function () { setUpdatePeriod('1_min'); } }
+      { label: '1 minute', type: 'radio', id: '1_min', click: function () { setUpdatePeriod('1_min'); } },
     ]
   },
   { type: 'separator' },
@@ -116,6 +120,8 @@ function exit() {
 };
 
 function showGallery() {
+  if (galleryWindow != null) { return; }
+
   galleryWindow = new BrowserWindow({
     height: 800,
     width: 600
@@ -129,6 +135,8 @@ function showGallery() {
 }
 
 function showOptions() {
+  if (optionsWindow != null) { return; }
+
   optionsWindow = new BrowserWindow({
     height: 400,
     width: 400
