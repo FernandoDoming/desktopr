@@ -16,20 +16,31 @@ var PATH = __dirname;
 var IMAGES_PATH = PATH + '/images/';
 var ICONS_PATH = PATH + '/icons/';
 
+var INTERVALS = {
+  '1_hour': 60 * 60 * 1000,
+  '30_min': 30 * 60 * 1000,
+  '15_min': 15 * 60 * 1000,
+  '5_min': 5 * 60 * 1000,
+  '1_min': 1 * 60 * 1000,
+};
+
 var tray = null;
 var service = null;
 var settings = null;
+var interval = null;
 
 var contextMenu = Menu.buildFromTemplate([
   { label: 'Show gallery...', click: showGallery },
   {
+    id: 'change_background',
     label: 'Change background each',
     submenu: [
-      { label: '1 hour' },
-      { label: '30 minutes' },
-      { label: '15 minutes' },
-      { label: '5 minutes' },
-      { label: '1 minute' }
+      { label: 'Never', type: 'radio', id: 'never', click: function () { setUpdatePeriod('never'); } },
+      { label: '1 hour', type: 'radio', id: '1_hour', click: function () { setUpdatePeriod('1_hour'); } },
+      { label: '30 minutes', type: 'radio', id: '30_min', click: function () { setUpdatePeriod('30_min'); } },
+      { label: '15 minutes', type: 'radio', id: '15_min', click: function () { setUpdatePeriod('15_min'); } },
+      { label: '5 minutes', type: 'radio', id: '5_min', click: function () { setUpdatePeriod('5_min'); } },
+      { label: '1 minute', type: 'radio', id: '1_min', click: function () { setUpdatePeriod('1_min'); } }
     ]
   },
   { type: 'separator' },
@@ -41,6 +52,8 @@ var contextMenu = Menu.buildFromTemplate([
 app.on('ready', function () {
 
   settings = Settings.load();
+  setUpdatePeriod(settings.period);
+
   tray = new Tray(ICONS_PATH + 'IconTemplate.png');
   service = new Desktopr({
     images_path: IMAGES_PATH,
@@ -72,6 +85,10 @@ app.on('ready', function () {
       tray.setImage(ICONS_PATH + '/IconDownload.png');
     }
   });
+
+  tray.on('right-click', function (event) {
+    tray.popUpContextMenu(contextMenu);
+  });
 });
 
 // Do not quit when all windows are closed
@@ -81,6 +98,15 @@ app.on('window-all-closed', function () {});
 ipc.on('set-background', function (event, data) {
   winston.info('[*] Requested to get ' + data.id);
   service.setBackgroundById(data.id);
+});
+
+ipc.on('request-settings', function (event, data) {
+  event.sender.send('init-settings', settings);
+});
+
+ipc.on('set-option', function (event, data) {
+  settings[data.key] = data.value;
+  Settings.save(settings);
 });
 
 /********************** Functions **********************/
@@ -110,18 +136,27 @@ function showOptions() {
 
   optionsWindow.loadURL('file://' + __dirname + '/views/html/options.html');
 
-  ipc.on('request-settings', function (event, data) {
-    event.sender.send('init-settings', settings);
-  });
-
-  ipc.on('set-option', function (event, data) {
-    settings[data.key] = data.value;
-    Settings.save(settings);
-  });
-
   optionsWindow.on('closed', function () {
     optionsWindow = null;
   });
+}
+
+function setUpdatePeriod(period) {
+  contextMenu.items.filter(function (obj) {
+    return obj.id == 'change_background';
+  })[0].submenu.items.filter(function (obj) {
+    return obj.id == period;
+  })[0].checked = true;
+
+  settings.period = period;
+  Settings.save(settings);
+
+  clearInterval(interval);
+  if (period != 'never') {
+    interval = setInterval(function () {
+      service.newBackground();
+    }, INTERVALS[period]);
+  }
 }
 
 function setWallpaper(image) {
