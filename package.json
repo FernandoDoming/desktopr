@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "example menubar electron app",
   "dependencies": {
-    "electron": "0.4.1",
     "500px": "0.5.1",
     "winston": "2.2.0",
     "wallpaper": "2.1.0",
@@ -11,11 +10,12 @@
     "masonry-layout": "4.0.0",
     "imagesloaded": "4.1.0",
     "handlebars": "4.0.5",
-    "yamljs": "0.2.6"
+    "yamljs": "0.2.6",
+    "request": "2.72.0"
   },
   "devDependencies": {
-    "electron-packager": "^5.1.0",
-    "electron-prebuilt": "^0.36.0"
+    "electron-packager": "^7.0.1",
+    "electron-prebuilt": "^1.0.2"
   },
   "main": "main.js",
   "scripts": {

@@ -1,4 +1,4 @@
-var ipc = require('ipc');
+var ipc = require('electron').ipcRenderer;
 var $   = require('jquery');
 var Masonry = require('masonry-layout');
 var Handlebars = require('handlebars');

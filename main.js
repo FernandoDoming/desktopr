@@ -1,11 +1,11 @@
 var electron = require('electron');
-var app = require('app');
-var Menu = require('menu');
-var Tray = require('tray');
-var BrowserWindow = require('browser-window');
+var app = electron.app;
+var Menu = electron.Menu;
+var Tray = electron.Tray;
+var BrowserWindow = electron.BrowserWindow;
+var ipc = electron.ipcMain;
 
 var fs = require('fs');
-var ipc = require('ipc');
 var request = require('request');
 var winston = require('winston');
 var wallpaper = require('wallpaper');
@@ -124,7 +124,8 @@ function showGallery() {
 
   galleryWindow = new BrowserWindow({
     height: 800,
-    width: 600
+    width: 600,
+    titleBarStyle: 'hidden'
   });
 
   galleryWindow.loadURL('file://' + __dirname + '/views/html/gallery.html');
