@@ -6,8 +6,8 @@ var request = require('request');
 var API500px = require('500px');
 var api500px = new API500px('9FNw3T1ywcR5PC0LMsTxrsSm6CH47HAYENQvh81L');
 
-var RPP = 50;
-var FEATURES = ['Editors', 'Popular'];
+const CONSTANTS = require.main.require('./src/constants/constants.js');
+
 var _this;
 
 function Desktopr(options) {
@@ -21,7 +21,7 @@ function Desktopr(options) {
   };
 
   _this.newBackground = function () {
-    var feature = FEATURES[Math.floor(Math.random() * FEATURES.length)];
+    var feature = CONSTANTS.FEATURES[Math.floor(Math.random() * CONSTANTS.FEATURES.length)];
     winston.info('[*] Getting image from ' + feature);
     _this['new' + feature + 'Background']();
   };
@@ -29,7 +29,7 @@ function Desktopr(options) {
   _this.newPopularBackground = function () {
     api500px.photos.getPopular({
       sort: 'created_at',
-      rpp: RPP,
+      rpp: CONSTANTS.RPP,
       image_size: 2048,
     }, fetchImage);
   };
@@ -37,7 +37,7 @@ function Desktopr(options) {
   _this.newEditorsBackground = function () {
     api500px.photos.getEditorsChoice({
       sort: 'created_at',
-      rpp: RPP,
+      rpp: CONSTANTS.RPP,
       image_size: 2048,
     }, fetchImage);
   };

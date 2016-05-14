@@ -9,20 +9,10 @@ var fs = require('fs');
 var request = require('request');
 var winston = require('winston');
 var wallpaper = require('wallpaper');
-var Desktopr = require('./desktopr.js');
-var Settings = require('./settings.js');
+var Desktopr = require('./src/main/desktopr.js');
+var Settings = require('./src/main/settings.js');
 
-var PATH = __dirname;
-var IMAGES_PATH = PATH + '/images/';
-var ICONS_PATH = PATH + '/icons/';
-
-var INTERVALS = {
-  '1_hour': 60 * 60 * 1000,
-  '30_min': 30 * 60 * 1000,
-  '15_min': 15 * 60 * 1000,
-  '5_min': 5 * 60 * 1000,
-  '1_min': 1 * 60 * 1000,
-};
+const CONSTANTS = require('./src/constants/constants.js');
 
 var tray = null;
 var service = null;
@@ -58,15 +48,15 @@ app.on('ready', function () {
   settings = Settings.load();
   setUpdatePeriod(settings.period);
 
-  tray = new Tray(ICONS_PATH + 'IconTemplate.png');
+  tray = new Tray(CONSTANTS.ICONS_PATH + 'IconTemplate.png');
   service = new Desktopr({
-    images_path: IMAGES_PATH,
+    images_path: CONSTANTS.IMAGES_PATH,
     allow_nsfw: settings.allow_nsfw
   });
 
   service.on('fetch', function (background) {
     winston.info('[*] Got a picture: ' + background.id + '. Saving to disk...');
-    const IMAGE_FILE = IMAGES_PATH + background.id + '.' + background.image_format;
+    const IMAGE_FILE = CONSTANTS.IMAGES_PATH + background.id + '.' + background.image_format;
     var stream = fs.createWriteStream(IMAGE_FILE);
     request(background.image_url).pipe(stream).on('close', function () {
       setWallpaper(IMAGE_FILE);
@@ -75,8 +65,8 @@ app.on('ready', function () {
 
   if (settings.open_gallery) showGallery();
 
-  fs.exists(IMAGES_PATH, function (exists) {
-    if (!exists) fs.mkdir(IMAGES_PATH);
+  fs.exists(CONSTANTS.IMAGES_PATH, function (exists) {
+    if (!exists) fs.mkdir(CONSTANTS.IMAGES_PATH);
   });
 
   tray.on('click', function (event) {
@@ -86,7 +76,7 @@ app.on('ready', function () {
     } else {
       winston.info('[*] Getting images...');
       service.newBackground();
-      tray.setImage(ICONS_PATH + '/IconDownload.png');
+      tray.setImage(CONSTANTS.ICONS_PATH + '/IconDownload.png');
     }
   });
 
@@ -164,14 +154,14 @@ function setUpdatePeriod(period) {
   if (period != 'never') {
     interval = setInterval(function () {
       service.newBackground();
-    }, INTERVALS[period]);
+    }, CONSTANTS.INTERVALS[period]);
   }
 }
 
 function setWallpaper(image) {
   wallpaper.set(image).then(function () {
 
-    tray.setImage(ICONS_PATH + '/IconTemplate.png');
+    tray.setImage(CONSTANTS.ICONS_PATH + '/IconTemplate.png');
     winston.info('[*] Set wallpaper ' + image);
 
     // Delete the file to comply with 500px API terms

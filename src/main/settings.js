@@ -3,23 +3,17 @@ var fs = require('fs');
 var winston = require('winston');
 var process = require('process');
 
-var CONFIG_DIR = __dirname + '/app/config/';
-var SETTINGS_FILE = CONFIG_DIR + '/settings.yml';
+const CONSTANTS = require.main.require('./src/constants/constants.js');
 
 var settings = {};
-var defaults = {
-  open_gallery: true,
-  allow_nsfw: true,
-  period: 'never'
-};
 
 settings.load = function () {
-  return YAML.load(SETTINGS_FILE);
+  return YAML.load(CONSTANTS.SETTINGS.FILE);
 };
 
 settings.save = function (settings) {
   var yaml = YAML.stringify(settings);
-  fs.writeFile(SETTINGS_FILE, yaml, function (error) {
+  fs.writeFile(CONSTANTS.SETTINGS.FILE, yaml, function (error) {
     if (error) {
       winston.error('[x] Error writting settings');
     }
@@ -28,9 +22,9 @@ settings.save = function (settings) {
 };
 
 function initSettings() {
-  if (fs.existsSync(SETTINGS_FILE)) return;
-  mkdir_p(CONFIG_DIR);
-  settings.save(defaults);
+  if (fs.existsSync(CONSTANTS.SETTINGS.FILE)) return;
+  mkdir_p(CONSTANTS.SETTINGS.PATH);
+  settings.save(CONSTANTS.SETTINGS.DEFAULTS);
 }
 
 function mkdir_p(path, root) {
