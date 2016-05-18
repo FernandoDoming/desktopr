@@ -1,30 +1,34 @@
-var electron = require('electron');
-var app = electron.app;
-var Menu = electron.Menu;
-var Tray = electron.Tray;
-var BrowserWindow = electron.BrowserWindow;
-var ipc = electron.ipcMain;
+const electron = require('electron');
+const app = electron.app;
+const Menu = electron.Menu;
+const Tray = electron.Tray;
+const BrowserWindow = electron.BrowserWindow;
+const ipc = electron.ipcMain;
 
-var fs = require('fs');
-var request = require('request');
-var winston = require('winston');
-var wallpaper = require('wallpaper');
-var Desktopr = require('./src/main/desktopr.js');
-var Settings = require('./src/main/settings.js');
+const fs = require('fs');
+const request = require('request');
+const winston = require('winston');
+const wallpaper = require('wallpaper');
+const Desktopr = require('./src/main/desktopr.js');
+const Settings = require('./src/main/settings.js');
+const Templates = require('./src/constants/templates.js');
+const Gallery = require('./src/ui/gallery.js');
+const Options = require('./src/ui/options.js');
 
 const CONSTANTS = require('./src/constants/constants.js');
 
 var tray = null;
-var service = null;
-var settings = null;
 var interval = null;
 
-var galleryWindow = null;
-var optionsWindow = null;
+var settings = Settings.load();
+var service = new Desktopr({
+  images_path: CONSTANTS.IMAGES_PATH,
+  allow_nsfw: settings.allow_nsfw
+});
 
 var contextMenu = Menu.buildFromTemplate([
-  { label: 'Get a random wallpaper', click: function () { service.newBackground(); } },
-  { label: 'Show gallery...', click: showGallery },
+  { label: 'Get a random wallpaper', click: service.newBackground },
+  { label: 'Show gallery...', click: Gallery.show },
   {
     id: 'change_background',
     label: 'Change background each',
@@ -38,21 +42,15 @@ var contextMenu = Menu.buildFromTemplate([
     ]
   },
   { type: 'separator' },
-  { label: 'Options', click: showOptions },
+  { label: 'Options', click: Options.show },
   { type: 'separator' },
   { label: 'Quit', click: exit }
 ]);
 
 app.on('ready', function () {
 
-  settings = Settings.load();
   setUpdatePeriod(settings.period);
-
   tray = new Tray(CONSTANTS.ICONS_PATH + 'IconTemplate.png');
-  service = new Desktopr({
-    images_path: CONSTANTS.IMAGES_PATH,
-    allow_nsfw: settings.allow_nsfw
-  });
 
   service.on('fetch', function (background) {
     winston.info('[*] Got a picture: ' + background.id + '. Saving to disk...');
@@ -63,7 +61,7 @@ app.on('ready', function () {
     });
   });
 
-  if (settings.open_gallery) showGallery();
+  if (settings.open_gallery) Gallery.show();
 
   fs.exists(CONSTANTS.IMAGES_PATH, function (exists) {
     if (!exists) fs.mkdir(CONSTANTS.IMAGES_PATH);
@@ -108,37 +106,6 @@ ipc.on('set-option', function (event, data) {
 function exit() {
   app.quit();
 };
-
-function showGallery() {
-  if (galleryWindow != null) { return; }
-
-  galleryWindow = new BrowserWindow({
-    height: 800,
-    width: 600,
-    titleBarStyle: 'hidden'
-  });
-
-  galleryWindow.loadURL('file://' + __dirname + '/views/html/gallery.html');
-
-  galleryWindow.on('closed', function () {
-    galleryWindow = null;
-  });
-}
-
-function showOptions() {
-  if (optionsWindow != null) { return; }
-
-  optionsWindow = new BrowserWindow({
-    height: 400,
-    width: 400
-  });
-
-  optionsWindow.loadURL('file://' + __dirname + '/views/html/options.html');
-
-  optionsWindow.on('closed', function () {
-    optionsWindow = null;
-  });
-}
 
 function setUpdatePeriod(period) {
   contextMenu.items.filter(function (obj) {
