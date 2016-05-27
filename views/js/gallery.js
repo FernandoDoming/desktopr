@@ -1,27 +1,35 @@
-var ipc = require('electron').ipcRenderer;
-var $   = require('jquery');
-var Masonry = require('masonry-layout');
-var Handlebars = require('handlebars');
-var imagesLoaded = require('imagesloaded');
+const ipc = require('electron').ipcRenderer;
+const $   = require('jquery');
+const _   = require('jquery-inview');
+const Masonry = require('masonry-layout');
+const Handlebars = require('handlebars');
+const imagesLoaded = require('imagesloaded');
 
-var RPP = 50;
-var settings = null;
+_500px.init({
+  sdk_key: '93b63bb139a91188c29062455158bdf377ff9b75'
+});
+
+const RPP = 50;
+let settings = null;
+let page = 1;
 
 $(document).ready(function () {
 
   ipc.on('init-settings', function (opts) {
     settings = opts;
-
-    _500px.api('/photos', { feature: 'editors', page: 1, rpp: RPP, image_size: 20 }, appendImages);
-    _500px.api('/photos', { feature: 'popular', page: 1, rpp: RPP, image_size: 20 }, appendImages);
-  });
-
-  _500px.init({
-    sdk_key: '93b63bb139a91188c29062455158bdf377ff9b75'
+    request();
   });
 
   ipc.send('request-settings');
 });
+
+$('#end').on('inview', request);
+
+function request() {
+  _500px.api('/photos', { feature: 'editors', page: page, rpp: RPP, image_size: 20 }, appendImages);
+  _500px.api('/photos', { feature: 'popular', page: page, rpp: RPP, image_size: 20 }, appendImages);
+  page++;
+}
 
 function appendImages(response) {
   console.log(response.data.photos);
