@@ -1,18 +1,18 @@
-var electron = require('electron');
-var BrowserWindow = electron.BrowserWindow;
-var Menu = electron.Menu;
+const electron = require('electron');
+const BrowserWindow = electron.BrowserWindow;
+const Menu = electron.Menu;
 
-var Templates = require.main.require('./src/constants/templates.js');
+const Templates = require.main.require('./src/constants/templates.js');
 const CONSTANTS = require.main.require('./src/constants/constants.js');
 
-var gallery = {
+let gallery = {
   window: null,
 };
 
 gallery.show = function showGallery() {
   if (gallery.window != null) { return; }
 
-  var menu = new Menu.buildFromTemplate(Templates.appMenu);
+  let menu = new Menu.buildFromTemplate(Templates.appMenu);
   Menu.setApplicationMenu(menu);
 
   gallery.window = new BrowserWindow({
