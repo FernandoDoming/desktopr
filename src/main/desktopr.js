@@ -97,7 +97,7 @@ function setBackground(error, results) {
     wallpaper.set(IMAGE_FILE).then(function () {
 
       //tray.setImage(ICONS_PATH + '/IconTemplate.png');
-      winston.info('[*] Set wallpaper ' + image);
+      winston.info('[*] Set wallpaper ' + image.id);
 
       // Delete the file to comply with 500px API terms
       fs.unlink(image);

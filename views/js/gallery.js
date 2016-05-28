@@ -26,6 +26,15 @@ $(document).ready(function () {
   ipc.send('request-settings');
 });
 
+$(document).on('click', '.set-background', function () {
+  let $imageBlock = $(this).closest('.image-block');
+  let id = $imageBlock.data('id');
+  let title = $imageBlock.data('title');
+
+  snackbar.show(`Setting ${title} as the background`);
+  ipc.send('set-background', { id: id });
+});
+
 $('#end').on('inview', request);
 
 function request() {
@@ -63,14 +72,5 @@ function appendImages(response) {
     var masonry = new Masonry(container, {
       itemSelector: '.image-block'
     });
-  });
-
-  $(document).on('click', '.set-background', function () {
-    let $imageBlock = $(this).closest('.image-block');
-    let id = $imageBlock.data('id');
-    let title = $imageBlock.data('title');
-
-    snackbar.show(`Setting ${title} as the background`);
-    ipc.send('set-background', { id: id });
   });
 }
