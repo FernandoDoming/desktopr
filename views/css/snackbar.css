@@ -1,0 +1,18 @@
+.snackbar {
+  position: fixed;
+  bottom: -100px;
+  transition: bottom 1s;
+  width: 100%;
+  padding: 15px 25px;
+  z-index: 1;
+  background-color: #252525;
+}
+
+.snackbar.show {
+  bottom: 0;
+}
+
+.snackbar .content {
+  color: white;
+  font-weight: 900;
+}
