@@ -16,6 +16,7 @@ function Snackbar(opts) {
     document.querySelector(this.appendTo).innerHTML += snackbarHTML;
     this.snackbar = document.querySelector('.snackbar');
     this.content  = document.querySelector('.snackbar .content');
+    this.action   = document.querySelector('.snackbar .action');
   };
 
   this.init();
@@ -28,9 +29,15 @@ Snackbar.prototype.hide = function (self = this.self) {
   }
 };
 
-Snackbar.prototype.show = function (message, callback = function(){}) {
-  this.content.innerHTML = message;
+Snackbar.prototype.show = function (message, action = {}) {
+  let _action = action || {};
+  let actionTitle = _action.title || '';
+  let actionCallback = _action.callback || function () {};
   let ctx = this;
+
+  this.content.innerHTML = message;
+  this.action.innerHTML = actionTitle;
+  this.action.addEventListener('click', actionCallback);
 
   if (!this.showing) {
     this.snackbar.className += ' show';

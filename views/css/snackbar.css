@@ -16,3 +16,12 @@
   color: white;
   font-weight: 900;
 }
+
+.snackbar .action {
+  color: #FF4081;
+  font-weight: 900;
+  cursor: pointer;
+  position: absolute;
+  right: 25px;
+  text-transform: uppercase;
+}
