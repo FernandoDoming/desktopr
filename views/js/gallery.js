@@ -18,7 +18,7 @@ let page = 1;
 
 $(document).ready(function () {
 
-  ipc.on('init-settings', function (opts) {
+  ipc.on('init-settings', function (sender, opts) {
     settings = opts;
     request();
   });
