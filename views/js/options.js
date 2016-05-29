@@ -1,7 +1,7 @@
-var ipc = require('ipc');
-var $   = require('jquery');
+const ipc = require('electron').ipcRenderer;
+const $   = require('jquery');
 
-ipc.on('init-settings', function (settings) {
+ipc.on('init-settings', function (sender, settings) {
   $('input[type="checkbox"][data-key="open_gallery"]').attr('checked', settings.open_gallery);
   $('input[type="checkbox"][data-key="allow_nsfw"]').attr('checked', settings.allow_nsfw);
 });
