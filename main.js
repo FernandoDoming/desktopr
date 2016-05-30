@@ -41,7 +41,8 @@ app.on('ready', function () {
 
   tray.on('click', function (event) {
 
-    if (event.altKey) {
+    if (event.altKey && App.settings.menu_on_alt ||
+        !event.altKey && !App.settings.menu_on_alt) {
       tray.popUpContextMenu(App.contextMenu);
     } else {
       winston.info('[*] Getting images...');

@@ -1,8 +1,8 @@
-var electron = require('electron');
-var BrowserWindow = electron.BrowserWindow;
-var Menu = electron.Menu;
+const electron = require('electron');
+const BrowserWindow = electron.BrowserWindow;
+const Menu = electron.Menu;
 
-var Templates = require.main.require('./src/constants/templates.js');
+const Templates = require.main.require('./src/constants/templates.js');
 const CONSTANTS = require.main.require('./src/constants/constants.js');
 
 var options = {
