@@ -1,5 +1,6 @@
 const ipc = require('electron').ipcRenderer;
-const $   = require('jquery');
+const $ = window.$ = window.jQuery = require('jquery');
+const bootstrap = require('./../js/bootstrap.min.js');
 const _   = require('jquery-inview');
 const Masonry = require('masonry-layout');
 const Handlebars = require('handlebars');
@@ -16,13 +17,12 @@ const RPP = 50;
 let settings = null;
 let page = 1;
 
+ipc.on('init-settings', function (sender, opts) {
+  settings = opts;
+  request();
+});
+
 $(document).ready(function () {
-
-  ipc.on('init-settings', function (sender, opts) {
-    settings = opts;
-    request();
-  });
-
   ipc.send('request-settings');
 });
 
@@ -45,8 +45,6 @@ function request() {
 }
 
 function appendImages(response) {
-  //console.log(response.data.photos);
-
   $('#loading').hide();
 
   var source   = $("#image-template").html();
@@ -64,7 +62,8 @@ function appendImages(response) {
       nsfw: photo.nsfw
     };
     var html    = template(context);
-    $('.images').append(html);
+    $appended = $('.images').append(html);
+    $appended.find('[data-toggle="tooltip"]').tooltip();
   });
 
   var container = document.querySelector('.images');
