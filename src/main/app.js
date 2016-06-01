@@ -25,29 +25,12 @@ App.service = new Desktopr({
   allow_nsfw: Settings.load().allow_nsfw
 });
 
-const template = [
-  { label: 'Get a random wallpaper', click: App.service.newBackground },
-  { label: 'Show gallery...', click: Gallery.show },
-  {
-    id: 'change_background',
-    label: 'Change background each',
-    submenu: [
-      { label: 'Never', type: 'radio', id: 'never', click: function () { App.setUpdatePeriod('never'); } },
-      { label: '1 hour', type: 'radio', id: '1_hour', click: function () { App.setUpdatePeriod('1_hour'); } },
-      { label: '30 minutes', type: 'radio', id: '30_min', click: function () { App.setUpdatePeriod('30_min'); } },
-      { label: '15 minutes', type: 'radio', id: '15_min', click: function () { App.setUpdatePeriod('15_min'); } },
-      { label: '5 minutes', type: 'radio', id: '5_min', click: function () { App.setUpdatePeriod('5_min'); } },
-      { label: '1 minute', type: 'radio', id: '1_min', click: function () { App.setUpdatePeriod('1_min'); } },
-    ]
-  },
-  { type: 'separator' },
-  { label: 'Options', click: Options.show },
-  { type: 'separator' },
-  { label: 'Quit', click: App.exit }
-];
-
 App.setUpdatePeriod = function(period) {
-  App.contextMenu = Menu.buildFromTemplate(template);
+  App.contextMenu = Menu.buildFromTemplate(Templates.buildContextMenuTemplate({
+    app: App,
+    gallery: Gallery,
+    options: Options
+  }));
   App.contextMenu.items.filter(function (obj) {
     return obj.id == 'change_background';
   })[0].submenu.items.filter(function (obj) {

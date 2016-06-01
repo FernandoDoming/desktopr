@@ -1,8 +1,7 @@
-var templates = {};
-
 const Options = require.main.require('./src/ui/options.js');
-
 const name = require('electron').app.getName();
+
+let templates = {};
 
 templates.appMenu = [ {
   label: 'View',
@@ -121,5 +120,28 @@ if (process.platform === 'darwin') {
     }
   );
 }
+
+templates.buildContextMenuTemplate = function (refs) {
+  return [
+    { label: 'Get a random wallpaper', click: refs.app.service.newBackground },
+    { label: 'Show gallery...', click: refs.gallery.show },
+    {
+      id: 'change_background',
+      label: 'Change background each',
+      submenu: [
+        { label: 'Never', type: 'radio', id: 'never', click: function () { refs.app.setUpdatePeriod('never'); } },
+        { label: '1 hour', type: 'radio', id: '1_hour', click: function () { refs.app.setUpdatePeriod('1_hour'); } },
+        { label: '30 minutes', type: 'radio', id: '30_min', click: function () { refs.app.setUpdatePeriod('30_min'); } },
+        { label: '15 minutes', type: 'radio', id: '15_min', click: function () { refs.app.setUpdatePeriod('15_min'); } },
+        { label: '5 minutes', type: 'radio', id: '5_min', click: function () { refs.app.setUpdatePeriod('5_min'); } },
+        { label: '1 minute', type: 'radio', id: '1_min', click: function () { refs.app.setUpdatePeriod('1_min'); } },
+      ]
+    },
+    { type: 'separator' },
+    { label: 'Options', click: refs.options.show },
+    { type: 'separator' },
+    { label: 'Quit', click: refs.app.exit }
+  ];
+};
 
 module.exports = templates;
