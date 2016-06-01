@@ -130,6 +130,11 @@ templates.buildContextMenuTemplate = function (refs) {
       label: 'Change background each',
       submenu: [
         { label: 'Never', type: 'radio', id: 'never', click: function () { refs.app.setUpdatePeriod('never'); } },
+        { label: '24 hours', type: 'radio', id: '1_hour', click: function () { App.setUpdatePeriod('24_hours'); } },
+        { label: '12 hours', type: 'radio', id: '1_hour', click: function () { App.setUpdatePeriod('12_hours'); } },
+        { label: '6 hours', type: 'radio', id: '1_hour', click: function () { App.setUpdatePeriod('6_hours'); } },
+        { label: '4 hours', type: 'radio', id: '1_hour', click: function () { App.setUpdatePeriod('4_hours'); } },
+        { label: '2 hours', type: 'radio', id: '1_hour', click: function () { App.setUpdatePeriod('2_hours'); } },
         { label: '1 hour', type: 'radio', id: '1_hour', click: function () { refs.app.setUpdatePeriod('1_hour'); } },
         { label: '30 minutes', type: 'radio', id: '30_min', click: function () { refs.app.setUpdatePeriod('30_min'); } },
         { label: '15 minutes', type: 'radio', id: '15_min', click: function () { refs.app.setUpdatePeriod('15_min'); } },
