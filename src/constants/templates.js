@@ -1,5 +1,7 @@
 const Options = require.main.require('./src/ui/options.js');
-const name = require('electron').app.getName();
+const electron = require('electron');
+const app = electron.app;
+const name = app.getName();
 
 let templates = {};
 
