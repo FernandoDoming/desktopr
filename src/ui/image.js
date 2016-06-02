@@ -9,9 +9,23 @@ let imageWindow = {};
 imageWindow.window = null;
 
 imageWindow.create = function (opts) {
+  const screen = electron.screen;
+  let currentDisplay = screen.getDisplayNearestPoint(screen.getCursorScreenPoint());
+
+  let imageRatio = opts.width / opts.height;
+  let screenRatio = currentDisplay.workAreaSize.width / currentDisplay.workAreaSize.height;
+  let height = Math.min(opts.height, currentDisplay.workAreaSize.height);
+  let width = Math.min(opts.width, currentDisplay.workAreaSize.width);
+
+  if (opts.width > currentDisplay.workAreaSize.width && imageRatio > screenRatio) {
+    height = Math.round(width / imageRatio);
+  } else if (opts.height > currentDisplay.workAreaSize.height && imageRatio < screenRatio) {
+    width = Math.round(height * imageRatio);
+  }
+
   imageWindow.window = new BrowserWindow({
-    height: opts.height,
-    width: opts.width,
+    height: height,
+    width: width,
     maxWidth: opts.width,
     maxHeight: opts.height,
     titleBarStyle: 'hidden',
