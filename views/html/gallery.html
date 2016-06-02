@@ -27,7 +27,8 @@
 
     <!-- Templates -->
     <script id="image-template" type="text/x-handlebars-template">
-      <div class="image-block" data-id="{{id}}" data-title="{{title}}">
+      <div class="image-block" data-id="{{id}}" data-title="{{title}}"
+            data-height="{{height}}" data-width="{{width}}">
         <div class="overlay">
           <div class="header">
             <h3 class="title">{{title}}</h3>
@@ -39,8 +40,16 @@
           </div>
           <div class="footer">
             <div class="actions">
-              <a class="set-background" href="#">
-                <i class="fa fa-desktop" data-toggle="tooltip" data-placement="top" title="Set as background"></i>
+              <a id="set-background" href="#">
+                <i class="fa fa-desktop" data-toggle="tooltip"
+                    data-placement="top" title="Set as background"></i>
+              </a>
+              &#8226;
+              <a id="open-image" href="#">
+                <i class="fa fa-external-link-square"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Open in a new window"></i>
               </a>
             </div>
             <span>By <b class="author">{{author}}</b> &#8226; <span class="res">{{resolution}}</span></span>

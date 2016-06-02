@@ -42,12 +42,12 @@ function Desktopr(options) {
     }, fetchImage);
   };
 
-  _this.newBackgroundById = function (id) {
-    api500px.photos.getById( id, { image_size: 2048 }, fetchImage);
+  _this.newBackgroundById = function (id, callback = fetchImage) {
+    api500px.photos.getById( id, { image_size: 2048 }, callback);
   };
 
-  _this.setBackgroundById = function (id) {
-    api500px.photos.getById( id, { image_size: 2048 }, setBackground);
+  _this.setBackgroundById = function (id, callback = setBackground) {
+    api500px.photos.getById( id, { image_size: 2048 }, callback);
   };
 
 }

@@ -26,13 +26,23 @@ $(document).ready(function () {
   ipc.send('request-settings');
 });
 
-$(document).on('click', '.set-background', function () {
+$(document).on('click', '#set-background', function () {
   let $imageBlock = $(this).closest('.image-block');
   let id = $imageBlock.data('id');
   let title = $imageBlock.data('title');
 
   snackbar.show(`Setting ${title} as the background`);
   ipc.send('set-background', { id: id });
+});
+
+$(document).on('click', '#open-image', function () {
+  let $imageBlock = $(this).closest('.image-block');
+
+  ipc.send('open-image', {
+    id: $imageBlock.data('id'),
+    width: $imageBlock.data('width'),
+    height: $imageBlock.data('height')
+  });
 });
 
 $('#end').on('inview', request);
@@ -59,7 +69,9 @@ function appendImages(response) {
       id: photo.id,
       author: photo.user.firstname,
       resolution: photo.width + 'x' + photo.height,
-      nsfw: photo.nsfw
+      nsfw: photo.nsfw,
+      width: photo.width,
+      height: photo.height
     };
     var html    = template(context);
     $appended = $('.images').append(html);

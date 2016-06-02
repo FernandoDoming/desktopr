@@ -1,3 +1,7 @@
+html, body {
+  margin: 0;
+}
+
 .inline-code {
   font-family: monospace;
   background-color: #eee;

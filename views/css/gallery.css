@@ -7,6 +7,10 @@ body {
   width: 50%;
 }
 
+.image-block .overlay .actions a {
+  padding: 5px;
+}
+
 .overlay {
     position: absolute;
     width: 100%;

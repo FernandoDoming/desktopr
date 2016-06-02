@@ -1,13 +1,28 @@
 const electron = require('electron');
 const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
+const ipc = electron.ipcMain;
+const ImageWindow = require.main.require('./src/ui/image.js');
 
 const Templates = require.main.require('./src/constants/templates.js');
 const CONSTANTS = require.main.require('./src/constants/constants.js');
 
 let gallery = {
   window: null,
+  imageWindows: []
 };
+
+ipc.on('open-image', function(event, data) {
+  let imageWindow = ImageWindow.create(data);
+
+  gallery.imageWindows.push(imageWindow);
+  ImageWindow.init(data.id);
+
+  imageWindow.on('closed', function () {
+    gallery.imageWindows.splice(gallery.imageWindows.indexOf(imageWindow), 1);
+    imageWindow = null;
+  });
+});
 
 gallery.show = function showGallery() {
   if (gallery.window != null) { return; }
