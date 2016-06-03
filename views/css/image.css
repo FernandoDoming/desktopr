@@ -10,3 +10,40 @@ body {
   right: 0;
   left: 0;
 }
+
+#drawer .key[data-key="Description"] {
+  display: none;
+  margin-bottom: 5px;
+}
+
+#drawer .key[data-key="Description"] {
+  font-size: 18px;
+}
+
+#drawer .key[data-key="Name"] {
+  display: none;
+}
+
+#drawer .key[data-key="Name"] + .value {
+  font-size: 34px;
+  font-weight: 900;
+}
+
+#drawer .key[data-key="Author"],
+#drawer .key[data-key="Author"] + .value  {
+  font-size: 24px;
+}
+
+#drawer .entry {
+  padding: 10px 25px;
+}
+
+#drawer .key {
+  font-weight: 900;
+  margin-right: 10px;
+}
+
+#drawer .value {
+  font-weight: 300;
+  color: #555;
+}

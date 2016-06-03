@@ -27,13 +27,24 @@ function showcase(error, results) {
   document.getElementById('showcase').src = photo.image_url;
 
   CONSTANTS.PHOTOS.DISPLAYABLE_DETAILS.forEach(function (prop) {
-    if (photo[prop] !== undefined || photo[prop] !== '') {
-      let html = template({
-        key: prop.replace(/_/g, ' ').capitalize(),
-        value: photo[prop]
-      });
+    switch(prop) {
+      case 'user':
+        $('#drawer').append(template({
+          key: 'Author',
+          value: `${photo.user.firstname} ${photo.user.lastname}`
+        }));
+        break;
 
-      $('#drawer').append(html);
+      default:
+        if (photo[prop] !== undefined && photo[prop] !== ''
+              && photo[prop] !== null) {
+          let html = template({
+            key: prop.replace(/_/g, ' ').capitalize(),
+            value: photo[prop]
+          });
+
+          $('#drawer').append(html);
+      }
     }
   });
 }

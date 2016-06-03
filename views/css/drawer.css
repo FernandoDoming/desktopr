@@ -16,12 +16,13 @@
 
 #drawer {
   position: fixed;
-  right: -400px;
-  max-width: 400px;
-  padding: 20px;
+  right: -500px;
+  max-width: 460px;
   font-family: sans-serif;
   background-color: white;
-  box-shadow: 0 0 20px black;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+  height: 100%;
+  overflow-y: scroll;
   z-index: 1;
   transition: right 500ms;
 }
@@ -30,19 +31,14 @@
   right: 0;
 }
 
-#drawer .entry {
-  padding: 5px 0;
-}
-
-#drawer .key {
-  font-weight: 900;
-  margin-right: 15px;
+#drawer .top-bar {
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #3F51B5;
+  color: white;
 }
 
 #drawer #close-drawer {
-  position: absolute;
-  top: 10px;
-  left: 10px;
   cursor: pointer;
   padding: 5px;
 }

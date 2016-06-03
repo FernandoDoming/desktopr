@@ -1,5 +1,7 @@
 const drawerHTML = '<div id="drawer">' +
-                      '<i class="fa fa-times" id="close-drawer"></i>' +
+                      '<div class="top-bar">' +
+                        '<i class="fa fa-arrow-left" id="close-drawer"></i>' +
+                      '</div>' +
                     '</div>';
 
 function Drawer(opts) {
