@@ -2,15 +2,22 @@
   <head>
     <link rel="stylesheet" href="../css/app.css">
     <link rel="stylesheet" href="../css/image.css">
+    <link rel="stylesheet" href="../css/drawer.css">
     <link rel="stylesheet" href="../css/font-awesome.min.css">
   </head>
   <body>
     <div>
-      <i id="drawer" class="fa fa-bars fa-lg"></i>
+      <i id="open-drawer" class="fa fa-bars fa-lg"></i>
     </div>
     <img id="showcase" src="" alt="">
     <!-- Scripts -->
     <script type="text/javascript" src="../js/image.js"></script>
-    <script type="text/javascript" src="../js/500px.js"></script>
+    <!-- Templates -->
+    <script id="description-template" type="text/x-handlebars-template">
+      <div>
+        <span class="key">{{ key }}</span>
+        <span class="value">{{ value }}</span>
+      </div>
+    </script>
   </body>
 </html>

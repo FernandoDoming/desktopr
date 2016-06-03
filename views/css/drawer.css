@@ -1,0 +1,37 @@
+#open-drawer {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  color: white;
+  z-index: 1;
+  cursor: pointer;
+  padding: 10px;
+  opacity: 0.3;
+  transition: opacity 300ms;
+}
+
+#open-drawer:hover {
+  opacity: 1;
+}
+
+#drawer {
+  position: fixed;
+  right: -400px;
+  max-width: 400px;
+  background-color: white;
+  box-shadow: 0 0 5px white;
+  z-index: 1;
+  transition: right 500ms;
+}
+
+#drawer.show {
+  right: 0;
+}
+
+#drawer #close-drawer {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  padding: 5px;
+}
