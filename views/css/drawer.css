@@ -38,6 +38,13 @@
   color: white;
 }
 
+#drawer .top-bar .title {
+  padding: 0 20px;
+  font-size: 24px;
+  vertical-align: middle;
+  font-style: italic;
+}
+
 #drawer #close-drawer {
   cursor: pointer;
   padding: 5px;

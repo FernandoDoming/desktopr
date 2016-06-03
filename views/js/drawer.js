@@ -1,6 +1,6 @@
 const drawerHTML = '<div id="drawer">' +
                       '<div class="top-bar">' +
-                        '<i class="fa fa-arrow-left" id="close-drawer"></i>' +
+                        '<i class="fa fa-arrow-left" id="close-drawer"></i><span class="title"></span>' +
                       '</div>' +
                     '</div>';
 
@@ -10,9 +10,11 @@ function Drawer(opts) {
   let that = this;
 
   this.appendTo = _opts.appendTo || 'body';
+  this.title = _opts.title || '';
 
   this.init = function () {
     document.querySelector(this.appendTo).innerHTML += drawerHTML;
+    document.querySelector('#drawer .title').innerHTML = this.title;
     document.getElementById('open-drawer').addEventListener('click', function () {
       that.open();
     });

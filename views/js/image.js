@@ -8,10 +8,12 @@ const Drawer = require('./../js/drawer.js');
 
 const CONSTANTS = require('./../js/constants.js');
 
-let drawer = new Drawer();
+let drawer = new Drawer({
+  title: 'Details'
+});
 
 String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
+  return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
 ipc.on('request-image', function (event, data) {
