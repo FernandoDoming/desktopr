@@ -18,14 +18,25 @@
   position: fixed;
   right: -400px;
   max-width: 400px;
+  padding: 20px;
+  font-family: sans-serif;
   background-color: white;
-  box-shadow: 0 0 5px white;
+  box-shadow: 0 0 20px black;
   z-index: 1;
   transition: right 500ms;
 }
 
 #drawer.show {
   right: 0;
+}
+
+#drawer .entry {
+  padding: 5px 0;
+}
+
+#drawer .key {
+  font-weight: 900;
+  margin-right: 15px;
 }
 
 #drawer #close-drawer {
