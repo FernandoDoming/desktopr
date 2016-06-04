@@ -59,6 +59,10 @@ app.on('ready', function () {
 // Do not quit when all windows are closed
 app.on('window-all-closed', function () {});
 
+app.on('activate', function () {
+  Gallery.show();
+});
+
 // IPC events
 ipc.on('set-background', function (event, data) {
   winston.info('[*] Requested to get ' + data.id);

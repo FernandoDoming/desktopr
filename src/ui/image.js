@@ -31,6 +31,7 @@ imageWindow.create = function (opts) {
     titleBarStyle: 'hidden',
     transparent: true
   });
+  imageWindow.window.setAspectRatio(imageRatio);
   return imageWindow.window;
 };
 

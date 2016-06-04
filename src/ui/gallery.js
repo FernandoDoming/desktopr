@@ -25,7 +25,11 @@ ipc.on('open-image', function(event, data) {
 });
 
 gallery.show = function showGallery() {
-  if (gallery.window != null) { return; }
+  // Do not create the window again if it is already instantiated
+  if (gallery.window != null) {
+    gallery.window.show();
+    return;
+  }
 
   let menu = new Menu.buildFromTemplate(Templates.appMenu);
   Menu.setApplicationMenu(menu);
