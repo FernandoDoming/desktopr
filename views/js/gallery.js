@@ -1,19 +1,17 @@
 const ipc = require('electron').ipcRenderer;
 const $ = window.$ = window.jQuery = require('jquery');
 const bootstrap = require('./../js/bootstrap.min.js');
-const _   = require('jquery-inview');
+const _ = require('jquery-inview');
 const Masonry = require('masonry-layout');
 const Handlebars = require('handlebars');
 const imagesLoaded = require('imagesloaded');
 const Snackbar = require('./../js/snackbar.js');
+const API500px = require('500px');
+const api500px = new API500px('9FNw3T1ywcR5PC0LMsTxrsSm6CH47HAYENQvh81L');
 
 let snackbar = new Snackbar();
 
-_500px.init({
-  sdk_key: '93b63bb139a91188c29062455158bdf377ff9b75'
-});
-
-const RPP = 50;
+const RPP = 10;
 let settings = null;
 let page = 1;
 
@@ -48,18 +46,19 @@ $(document).on('click', '#open-image', function () {
 $('#end').on('inview', request);
 
 function request() {
-  _500px.api('/photos', { feature: 'editors', page: page, rpp: RPP, image_size: 20 }, appendImages);
-  _500px.api('/photos', { feature: 'popular', page: page, rpp: RPP, image_size: 20 }, appendImages);
+  api500px.photos.getEditorsChoice({ page: page, rpp: RPP, image_size: 20 }, appendImages);
+  api500px.photos.getPopular({ page: page, rpp: RPP, image_size: 20 }, appendImages);
   page++;
   snackbar.show('Getting more images');
 }
 
-function appendImages(response) {
+function appendImages(error, response) {
+  if (error) { return; }
   $('#loading').hide();
 
   var source   = $("#image-template").html();
   var template = Handlebars.compile(source);
-  response.data.photos.forEach(function (photo) {
+  response.photos.forEach(function (photo) {
 
     if (photo.nsfw && !settings.allow_nsfw) return;
 
