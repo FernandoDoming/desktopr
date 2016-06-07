@@ -72,8 +72,8 @@ function appendImages(error, response) {
       width: photo.width,
       height: photo.height
     };
-    var html    = template(context);
-    $appended = $('.images').append(html);
+    var html  = template(context);
+    var $appended = $(html).appendTo('.images');
     $appended.find('[data-toggle="tooltip"]').tooltip();
   });
 
@@ -81,6 +81,9 @@ function appendImages(error, response) {
   imagesLoaded(container, function () {
     var masonry = new Masonry(container, {
       itemSelector: '.image-block'
+    });
+    $('.images .image-block.image-block').each(function() {
+      $(this).addClass('animated fadeInUp');
     });
   });
 }
