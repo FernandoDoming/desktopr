@@ -80,10 +80,11 @@ function appendImages(error, response) {
   var container = document.querySelector('.images');
   imagesLoaded(container, function () {
     var masonry = new Masonry(container, {
-      itemSelector: '.image-block'
+      itemSelector: '.image-block',
+      isAnimated: false
     });
     $('.images .image-block.image-block').each(function() {
-      $(this).addClass('animated fadeInUp');
+      $(this).addClass('animated zoomIn');
     });
   });
 }

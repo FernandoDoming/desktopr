@@ -2703,10 +2703,6 @@
     -webkit-transform: scale3d(.3, .3, .3);
     transform: scale3d(.3, .3, .3);
   }
-
-  50% {
-    opacity: 1;
-  }
 }
 
 @keyframes zoomIn {
@@ -2715,15 +2711,13 @@
     -webkit-transform: scale3d(.3, .3, .3);
     transform: scale3d(.3, .3, .3);
   }
-
-  50% {
-    opacity: 1;
-  }
 }
 
 .zoomIn {
   -webkit-animation-name: zoomIn;
   animation-name: zoomIn;
+  animation-duration: 400ms;
+  animation-timing-function: linear;
 }
 
 @-webkit-keyframes zoomInDown {
