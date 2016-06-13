@@ -1,6 +1,10 @@
 const drawerHTML = '<div id="drawer">' +
                       '<div class="top-bar">' +
-                        '<i class="fa fa-arrow-left" id="close-drawer"></i><span class="title"></span>' +
+                        '<i id="close-drawer" class="fa fa-arrow-left"></i>' +
+                        '<span class="title"></span>' +
+                        '<div class="drawer-actions align-right">' +
+                          '<i id="drawer-action" class=""></i>' +
+                        '</div>' +
                       '</div>' +
                     '</div>';
 
@@ -11,6 +15,7 @@ function Drawer(opts) {
 
   this.appendTo = _opts.appendTo || 'body';
   this.title = _opts.title || '';
+  this.action = _opts.action || {};
 
   this.init = function () {
     document.querySelector(this.appendTo).innerHTML += drawerHTML;
@@ -21,6 +26,8 @@ function Drawer(opts) {
     document.getElementById('close-drawer').addEventListener('click', function () {
       that.close();
     });
+    document.getElementById('drawer-action').className += ` ${this.action.class}`;
+    document.getElementById('drawer-action').addEventListener('click', this.action.callback || function () {});
   };
 
   this.init();
