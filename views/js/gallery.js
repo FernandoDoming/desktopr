@@ -46,13 +46,16 @@ $(document).on('click', '#open-image', function () {
 $('#end').on('inview', request);
 
 function request() {
-  api500px.photos.getEditorsChoice({ page: page, rpp: RPP, image_size: 20 }, appendImages);
-  api500px.photos.getPopular({ page: page, rpp: RPP, image_size: 20 }, appendImages);
-  page++;
+  for (let source of settings.sources) {
+    api500px.photos[`get${source}`]({ page: page, rpp: RPP, image_size: 20 }, function(error, response) {
+      appendImages(error, response, source);
+    });
+    page++;
+  }
   snackbar.show('Getting more images');
 }
 
-function appendImages(error, response) {
+function appendImages(error, response, feature) {
   if (error) { return; }
   $('#loading').hide();
 
@@ -70,7 +73,8 @@ function appendImages(error, response) {
       resolution: photo.width + 'x' + photo.height,
       nsfw: photo.nsfw,
       width: photo.width,
-      height: photo.height
+      height: photo.height,
+      feature: feature
     };
     var html  = template(context);
     var $appended = $(html).appendTo('.images');
