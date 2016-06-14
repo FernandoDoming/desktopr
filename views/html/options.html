@@ -7,7 +7,7 @@
   </head>
   <body>
     <div class="settings">
-      <div class="section">
+      <div id="general" class="section">
         <h2>General settings</h2>
         <div class="checkbox-opt">
           <input type="checkbox" data-key="open_gallery"> Show gallery at startup
@@ -16,13 +16,22 @@
           <input type="checkbox" data-key="allow_nsfw"> Allow NSFW images
         </div>
       </div>
-      <div class="section">
+      <div id="keys" class="section">
         <h2>Menu settings</h2>
         <h4>Keys</h4>
         <input type="radio" name="menu_on_alt" value="true" data-key="menu_on_alt">
           <span class="inline-code">Alt-click / right-click</span> opens the menu, <span class="inline-code">regular click</span> sets a random background <br/>
         <input type="radio" name="menu_on_alt" value="false" data-key="menu_on_alt">
           <span class="inline-code">Regular click</span> opens the menu, <span class="inline-code">alt-click / right-click</span> sets a random background <br/>
+      </div>
+      <div id="sources" class="section">
+        <h2>Sources</h2>
+          <div class="checkbox-opt">
+            <input type="checkbox" data-key="EditorsChoice"> Editors' Choice
+          </div>
+          <div class="checkbox-opt">
+            <input type="checkbox" data-key="Popular"> Popular
+          </div>
       </div>
     </div>
 
