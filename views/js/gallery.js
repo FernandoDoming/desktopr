@@ -6,6 +6,7 @@ const Masonry = require('masonry-layout');
 const Handlebars = require('handlebars');
 const imagesLoaded = require('imagesloaded');
 const Snackbar = require('./../js/snackbar.js');
+const SourcesHelper = require('./../js/helpers/sources_helper.js');
 const API500px = require('500px');
 const api500px = new API500px('9FNw3T1ywcR5PC0LMsTxrsSm6CH47HAYENQvh81L');
 
@@ -56,7 +57,10 @@ function request() {
 }
 
 function appendImages(error, response, feature) {
-  if (error) { return; }
+  if (error) {
+    console.log(`ERROR: ${error.message}`);
+    return;
+  }
   $('#loading').hide();
 
   var source   = $("#image-template").html();
@@ -74,7 +78,7 @@ function appendImages(error, response, feature) {
       nsfw: photo.nsfw,
       width: photo.width,
       height: photo.height,
-      feature: feature
+      feature: SourcesHelper.humanize(feature)
     };
     var html  = template(context);
     var $appended = $(html).appendTo('.images');

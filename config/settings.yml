@@ -3,4 +3,5 @@ allow_nsfw: false
 period: never
 menu_on_alt: false
 sources:
+    - EditorsChoice
     - Popular
