@@ -12,7 +12,9 @@ constants.SETTINGS.FILE = constants.SETTINGS.PATH + '/settings.yml';
 constants.SETTINGS.DEFAULTS = {
                                 open_gallery: true,
                                 allow_nsfw: true,
-                                period: 'never'
+                                period: 'never',
+                                menu_on_alt: false,
+                                sources: []
                               };
 
 constants.INTERVALS = {

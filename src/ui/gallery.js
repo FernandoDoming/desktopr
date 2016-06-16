@@ -12,11 +12,11 @@ let gallery = {
   imageWindows: []
 };
 
-ipc.on('open-image', function(event, data) {
-  let imageWindow = ImageWindow.create(data);
+ipc.on('open-image', function(event, image) {
+  let imageWindow = ImageWindow.create(image);
 
   gallery.imageWindows.push(imageWindow);
-  ImageWindow.init(data.id);
+  ImageWindow.init(image.id);
 
   imageWindow.on('closed', function () {
     gallery.imageWindows.splice(gallery.imageWindows.indexOf(imageWindow), 1);
@@ -46,5 +46,11 @@ gallery.show = function showGallery() {
     gallery.window = null;
   });
 };
+
+gallery.reload = function () {
+  if (gallery.window != null) {
+    gallery.window.reload();
+  }
+}
 
 module.exports = gallery;
