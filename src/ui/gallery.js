@@ -24,7 +24,7 @@ ipc.on('open-image', function(event, image) {
   });
 });
 
-gallery.show = function showGallery() {
+gallery.show = function () {
   // Do not create the window again if it is already instantiated
   if (gallery.window != null) {
     gallery.window.show();

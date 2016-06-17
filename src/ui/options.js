@@ -9,7 +9,7 @@ var options = {
   window: null,
 };
 
-options.show = function showGallery() {
+options.show = function () {
   if (options.window != null) { return; }
 
   options.window = new BrowserWindow({
