@@ -76,4 +76,5 @@ ipc.on('request-settings', function (event, data) {
 ipc.on('set-option', function (event, data) {
   App.settings[data.key] = data.value;
   Settings.save(App.settings);
+  Options.shouldReloadOnExit = true;
 });
