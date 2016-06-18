@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="../css/app.css">
     <link rel="stylesheet" href="../css/image.css">
     <link rel="stylesheet" href="../css/drawer.css">
+    <link rel="stylesheet" href="../css/snackbar.css">
     <link rel="stylesheet" href="../css/font-awesome.min.css">
   </head>
   <body>
@@ -13,10 +14,34 @@
     <!-- Scripts -->
     <script type="text/javascript" src="../js/image.js"></script>
     <!-- Templates -->
-    <script id="description-template" type="text/x-handlebars-template">
+    <script id="displayable_details_template" type="text/x-handlebars-template">
+      {{#each entries}}
       <div class="entry">
-        <span class="key" data-key="{{ key }}">{{ key }}</span>
-        <span class="value">{{ value }}</span>
+        <span class="key" data-key="{{ this.key }}">{{ this.key }}</span>
+        <span class="value">{{ this.value }}</span>
+      </div>
+      {{/each}}
+    </script>
+
+    <script id="photography_details_template" type="text/x-handlebars-template">
+      <div class="grouped-entries">
+        {{#each entries}}
+        <div class="entry">
+          <span class="key" data-key="{{ this.key }}">{{ this.key }}</span>
+          <span class="value">{{ this.value }}</span>
+        </div>
+        {{/each}}
+      </div>
+    </script>
+
+    <script id="important_details_template" type="text/x-handlebars-template">
+      <div class="grouped-entries">
+        {{#each entries}}
+        <div class="entry">
+          <span class="key" data-key="{{ this.key }}">{{ this.key }}</span>
+          <span class="value">{{ this.value }}</span>
+        </div>
+        {{/each}}
       </div>
     </script>
   </body>
