@@ -11,6 +11,23 @@ body {
   left: 0;
 }
 
+#drawer .grouped-entries {
+  padding: 20px 0;
+  background-color: #f7f8fa;
+  text-align: center;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+#drawer .grouped-entries .entry {
+  padding: 4px 25px;
+}
+
+#drawer .grouped-entries .key {
+  color: #ccc;
+  font-weight: 900;
+}
+
 #drawer .key[data-key="Description"] {
   display: none;
   margin-bottom: 5px;
@@ -46,4 +63,5 @@ body {
 #drawer .value {
   font-weight: 300;
   color: #555;
+  /* font-weight: 700; */
 }

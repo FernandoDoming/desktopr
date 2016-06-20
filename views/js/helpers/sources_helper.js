@@ -7,7 +7,7 @@ const HUMANIZATION = {
 
 let SourcesHelper = {
   humanize: function (string) {
-    return HUMANIZATION[string] || string;
+    return HUMANIZATION[string] || string.replace(/_/g, ' ');
   }
 };
 
