@@ -78,7 +78,7 @@ function appendImages(error, response, feature) {
       nsfw: photo.nsfw,
       width: photo.width,
       height: photo.height,
-      feature: SourcesHelper.humanize(feature)
+      feature: StringsHelper.humanize(feature)
     };
     var html  = template(context);
     var $appended = $(html).appendTo('.images');

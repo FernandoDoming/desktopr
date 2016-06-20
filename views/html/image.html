@@ -54,6 +54,15 @@
       <div id="rating-details" class="row grouped-entries">
         {{#each entries}}
         <div class="entry col-xs-4">
+          {{#if_eq this.key "Fav count"}}
+            <i class="fa fa-heart" style="color: rgba(218, 0, 0, 0.7)"></i>
+          {{/if_eq}}
+          {{#if_eq this.key "Times viewed"}}
+            <i class="fa fa-eye" style="opacity: 0.7"></i>
+          {{/if_eq}}
+          {{#if_eq this.key "Rating"}}
+            <i class="fa fa-star-half-o" style="color: #F3BA2E"></i>
+          {{/if_eq}}
           <div class="key" data-key="{{ this.key }}">{{ this.key }}</div>
           <div class="value">{{ this.value }}</div>
         </div>

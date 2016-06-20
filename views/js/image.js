@@ -7,6 +7,7 @@ const Handlebars = require('handlebars');
 const Snackbar = require('./../js/snackbar.js');
 const Drawer = require('./../js/drawer.js');
 const StringsHelper = require('./../js/helpers/strings_helper.js');
+const PhotosHelper = require('./../js/helpers/photos_helper.js');
 
 const CONSTANTS = require('./../js/constants.js');
 
@@ -16,6 +17,14 @@ let snackbar = null;
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
 }
+
+Handlebars.registerHelper('if_eq', function(a, b, opts) {
+    if(a == b) {
+      return opts.fn(this);
+    } else {
+      return opts.inverse(this);
+    }
+});
 
 ipc.on('request-image', function (event, data) {
   api500px.photos.getById( data.id, { image_size: 2048 }, showcase);
@@ -48,6 +57,13 @@ function showcase(error, results) {
             return {
               key: StringsHelper.humanize(prop).capitalize(),
               value: `${photo[prop].firstname} ${photo[prop].lastname}`
+            }
+            break;
+
+          case 'category':
+            return {
+              key: StringsHelper.humanize(prop).capitalize(),
+              value: PhotosHelper.humanizeCategory(photo[prop])
             }
             break;
 
