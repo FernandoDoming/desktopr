@@ -42,10 +42,20 @@ function showcase(error, results) {
 
   for (let key of Object.keys(CONSTANTS.PHOTOS)) {
     let entries = CONSTANTS.PHOTOS[key].map(function (prop) {
-      if (photo[prop] != undefined && photo[prop] != '') {
-        return {
-          key: StringsHelper.humanize(prop.capitalize()),
-          value: StringsHelper.humanize(photo[prop])
+      if (photo[prop] != null && photo[prop] != '') {
+        switch (prop) {
+          case 'user':
+            return {
+              key: StringsHelper.humanize(prop.capitalize()),
+              value: `${photo[prop].firstname} ${photo[prop].lastname}`
+            }
+            break;
+
+          default:
+            return {
+              key: StringsHelper.humanize(prop.capitalize()),
+              value: StringsHelper.humanize(photo[prop])
+            }
         }
       }
     }).filter(function(e) { return e; });
