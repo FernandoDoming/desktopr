@@ -3,7 +3,7 @@ const HUMANIZATION = {
   FreshToday: "Fresh Today",
   FreshYesterday: "FreshYesterday",
   FreshWeek: "Fresh this week",
-  Iso: "ISO",
+  iso: "ISO",
   favorites_count: "Fav count"
 };
 

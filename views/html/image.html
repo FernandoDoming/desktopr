@@ -43,8 +43,13 @@
       <div class="">
         {{#each entries}}
         <div data-key="{{ this.key }}" class="entry">
+          {{#if this.extra.userpic_url}}
+            <div>
+              <img class="userpic" src="{{ this.extra.userpic_url }}" alt="{{ this.extra.username }}">
+            </div>
+          {{/if}}
           <span class="key" data-key="{{ this.key }}">{{ this.key }}</span>
-          <span class="value">{{ this.value }}</span>
+          <span class="value">{{#if_eq this.key "Aperture"}} f/{{/if_eq}}{{ this.value }}</span>
         </div>
         {{/each}}
       </div>
@@ -66,6 +71,15 @@
           <div class="key" data-key="{{ this.key }}">{{ this.key }}</div>
           <div class="value">{{ this.value }}</div>
         </div>
+        {{/each}}
+      </div>
+    </script>
+
+    <script id="tags_template" type="text/x-handlebars-template">
+      <div style="margin: 20px 15px;">
+        <h4 class="subtle">Tags</h4>
+        {{#each entries}}
+          <span class="tag">{{ this.value }}</span>
         {{/each}}
       </div>
     </script>

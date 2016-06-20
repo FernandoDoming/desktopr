@@ -27,7 +27,7 @@ Handlebars.registerHelper('if_eq', function(a, b, opts) {
 });
 
 ipc.on('request-image', function (event, data) {
-  api500px.photos.getById( data.id, { image_size: 2048 }, showcase);
+  api500px.photos.getById( data.id, { image_size: 2048, tags: 1 }, showcase);
 
   snackbar = new Snackbar();
   drawer = new Drawer({
@@ -56,8 +56,16 @@ function showcase(error, results) {
           case 'user':
             return {
               key: StringsHelper.humanize(prop).capitalize(),
-              value: `${photo[prop].firstname} ${photo[prop].lastname}`
+              value: `${photo[prop].firstname} ${photo[prop].lastname}`,
+              extra: {
+                userpic_url: photo[prop].userpic_url,
+                username : photo[prop].username
+              }
             }
+            break;
+
+          case 'tags':
+            return photo[prop].map(function (e) { return { value: e }; });
             break;
 
           case 'category':
