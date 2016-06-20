@@ -6,6 +6,7 @@ const $ = window.$ = window.jQuery = require('jquery');
 const Handlebars = require('handlebars');
 const Snackbar = require('./../js/snackbar.js');
 const Drawer = require('./../js/drawer.js');
+const StringsHelper = require('./../js/helpers/strings_helper.js');
 
 const CONSTANTS = require('./../js/constants.js');
 
@@ -41,11 +42,13 @@ function showcase(error, results) {
 
   for (let key of Object.keys(CONSTANTS.PHOTOS)) {
     let entries = CONSTANTS.PHOTOS[key].map(function (prop) {
-      return {
-        key: prop.capitalize(),
-        value: photo[prop]
+      if (photo[prop] != undefined && photo[prop] != '') {
+        return {
+          key: StringsHelper.humanize(prop.capitalize()),
+          value: StringsHelper.humanize(photo[prop])
+        }
       }
-    });
+    }).filter(function(e) { return e; });
 
     let template = Handlebars.compile( $(`#${key.toLowerCase()}_template`).html() )
     $('#drawer').append(template({

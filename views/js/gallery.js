@@ -6,7 +6,7 @@ const Masonry = require('masonry-layout');
 const Handlebars = require('handlebars');
 const imagesLoaded = require('imagesloaded');
 const Snackbar = require('./../js/snackbar.js');
-const SourcesHelper = require('./../js/helpers/sources_helper.js');
+const StringsHelper = require('./../js/helpers/strings_helper.js');
 const API500px = require('500px');
 const api500px = new API500px('9FNw3T1ywcR5PC0LMsTxrsSm6CH47HAYENQvh81L');
 
