@@ -9,3 +9,8 @@ html, body {
   border-radius: 3px;
   line-height: 30px;
 }
+
+.subtle {
+  color: #bbb;
+  font-weight: 900;
+}

@@ -46,14 +46,14 @@ function showcase(error, results) {
         switch (prop) {
           case 'user':
             return {
-              key: StringsHelper.humanize(prop.capitalize()),
+              key: StringsHelper.humanize(prop).capitalize(),
               value: `${photo[prop].firstname} ${photo[prop].lastname}`
             }
             break;
 
           default:
             return {
-              key: StringsHelper.humanize(prop.capitalize()),
+              key: StringsHelper.humanize(prop).capitalize(),
               value: StringsHelper.humanize(photo[prop])
             }
         }

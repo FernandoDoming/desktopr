@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="../css/drawer.css">
     <link rel="stylesheet" href="../css/snackbar.css">
     <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
   </head>
   <body>
     <div>
@@ -15,12 +17,15 @@
     <script type="text/javascript" src="../js/image.js"></script>
     <!-- Templates -->
     <script id="displayable_details_template" type="text/x-handlebars-template">
-      {{#each entries}}
-      <div class="entry">
-        <span class="key" data-key="{{ this.key }}">{{ this.key }}</span>
-        <span class="value">{{ this.value }}</span>
+      <div style="margin: 20px 15px;">
+        <h4 class="subtle">More details</h4>
+        {{#each entries}}
+        <div class="entry">
+          <span class="key" data-key="{{ this.key }}">{{ this.key }}</span>
+          <span class="value">{{ this.value }}</span>
+        </div>
+        {{/each}}
       </div>
-      {{/each}}
     </script>
 
     <script id="photography_details_template" type="text/x-handlebars-template">
@@ -37,9 +42,20 @@
     <script id="important_details_template" type="text/x-handlebars-template">
       <div class="">
         {{#each entries}}
-        <div class="entry">
+        <div data-key="{{ this.key }}" class="entry">
           <span class="key" data-key="{{ this.key }}">{{ this.key }}</span>
           <span class="value">{{ this.value }}</span>
+        </div>
+        {{/each}}
+      </div>
+    </script>
+
+    <script id="rating_details_template" type="text/x-handlebars-template">
+      <div id="rating-details" class="row grouped-entries">
+        {{#each entries}}
+        <div class="entry col-xs-4">
+          <div class="key" data-key="{{ this.key }}">{{ this.key }}</div>
+          <div class="value">{{ this.value }}</div>
         </div>
         {{/each}}
       </div>

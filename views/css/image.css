@@ -19,6 +19,21 @@ body {
   border-bottom: 1px solid #ccc;
 }
 
+#drawer .entry {
+  padding: 5px 25px;
+}
+
+#drawer .key {
+  font-weight: 500;
+  margin-right: 10px;
+  color: #999;
+}
+
+#drawer .value {
+  font-weight: 900;
+  color: #555;
+}
+
 #drawer .grouped-entries .entry {
   padding: 4px 25px;
 }
@@ -28,13 +43,14 @@ body {
   font-weight: 900;
 }
 
-#drawer .key[data-key="Description"] {
+#drawer .entry[data-key="Description"] .key {
   display: none;
   margin-bottom: 5px;
+  font-size: 18px;
 }
 
-#drawer .key[data-key="Description"] {
-  font-size: 18px;
+#drawer .entry[data-key="Description"] .value {
+  font-weight: 500;
 }
 
 #drawer .key[data-key="Name"] {
@@ -51,17 +67,17 @@ body {
   font-size: 24px;
 }
 
-#drawer .entry {
-  padding: 10px 25px;
+#drawer #rating-details {
+  text-align: center;
+  border-bottom: none;
 }
 
-#drawer .key {
+#drawer #rating-details .key {
+  margin-right: 0;
+}
+
+#drawer #rating-details .value {
+  font-size: 20px;
   font-weight: 900;
-  margin-right: 10px;
-}
-
-#drawer .value {
-  font-weight: 300;
-  color: #555;
-  /* font-weight: 700; */
+  margin-top: 5px;
 }
