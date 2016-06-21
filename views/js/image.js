@@ -63,7 +63,7 @@ function showcase(error, results) {
 
   for (let key of Object.keys(CONSTANTS.PHOTOS)) {
     let entries = CONSTANTS.PHOTOS[key].map(function (prop) {
-      if (photo[prop] != null && photo[prop] != '') {
+      if (photo[prop] != null && photo[prop] !== '') {
         switch (prop) {
           case 'user':
             return {
