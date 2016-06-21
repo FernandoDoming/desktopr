@@ -79,7 +79,9 @@
       <div style="margin: 20px 15px;">
         <h4 class="subtle">Tags</h4>
         {{#each entries}}
-          <span class="tag">{{ this.value }}</span>
+          {{#each this.value }}
+            <span class="tag">{{ this }}</span>
+          {{/each}}
         {{/each}}
       </div>
     </script>

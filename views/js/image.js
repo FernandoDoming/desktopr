@@ -26,6 +26,18 @@ Handlebars.registerHelper('if_eq', function(a, b, opts) {
     }
 });
 
+Handlebars.registerHelper("debug", function(optionalValue) {
+  console.log("Current Context");
+  console.log("====================");
+  console.log(this);
+
+  if (optionalValue) {
+    console.log("Value");
+    console.log("====================");
+    console.log(optionalValue);
+  }
+});
+
 ipc.on('request-image', function (event, data) {
   api500px.photos.getById( data.id, { image_size: 2048, tags: 1 }, showcase);
 
@@ -65,7 +77,10 @@ function showcase(error, results) {
             break;
 
           case 'tags':
-            return photo[prop].map(function (e) { return { value: e }; });
+            return {
+              key: 'tags',
+              value: photo[prop]
+            }
             break;
 
           case 'category':

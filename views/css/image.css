@@ -93,3 +93,12 @@ body {
   border-radius: 100%;
   margin-bottom: 10px
 }
+
+.tag {
+  padding: 5px 10px;
+  background-color: #3F51B5;
+  color: white;
+  border-radius: 3px;
+  line-height: 32px;
+  font-weight: 900;
+}
