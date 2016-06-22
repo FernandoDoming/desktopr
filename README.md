@@ -17,7 +17,7 @@ npm start
 
 ### Packaged binaries
 
-To come
+On the [releases](https://github.com/FernandoDoming/desktopr/releases) tab.
 
 ## Features
 
