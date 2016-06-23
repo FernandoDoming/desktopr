@@ -69,31 +69,6 @@ function showcase(error, results) {
       if (photo[prop] != null && photo[prop] !== '') {
         let fn = PhotosHelper[`get${prop.capitalize()}`] || PhotosHelper.getDefault;
         return fn(photo, prop);
-        /*switch (prop) {
-          case 'user':
-
-            break;
-
-          case 'tags':
-            return {
-              key: 'tags',
-              value: photo[prop]
-            }
-            break;
-
-          case 'category':
-            return {
-              key: StringsHelper.humanize(prop).capitalize(),
-              value: PhotosHelper.humanizeCategory(photo[prop])
-            }
-            break;
-
-          default:
-            return {
-              key: StringsHelper.humanize(prop).capitalize(),
-              value: StringsHelper.humanize(photo[prop])
-            }
-        }*/
       }
     }).filter(function(e) { return e; });
 
