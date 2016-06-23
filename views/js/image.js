@@ -15,10 +15,6 @@ const CONSTANTS = require('./../js/constants.js');
 let drawer = null;
 let snackbar = null;
 
-String.prototype.capitalize = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-}
-
 Handlebars.registerHelper('if_eq', function(a, b, opts) {
     if(a == b) {
       return opts.fn(this);
@@ -66,11 +62,9 @@ function showcase(error, results) {
 
   for (let key of Object.keys(CONSTANTS.PHOTOS)) {
     let entries = CONSTANTS.PHOTOS[key].map(function (prop) {
-      if (photo[prop] != null && photo[prop] !== '') {
-        let fn = PhotosHelper[`get${prop.capitalize()}`] || PhotosHelper.getDefault;
-        return fn(photo, prop);
-      }
-    }).filter(function(e) { return e; });
+      let fn = PhotosHelper[`get${prop.capitalize()}`] || PhotosHelper.getDefault;
+      return fn(photo, prop);
+    }).filter(function(e) { return e.value === 0 || e.value });
 
     let template = Handlebars.compile( $(`#${key.toLowerCase()}_template`).html() )
     $('#drawer').append(template({

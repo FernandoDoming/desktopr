@@ -60,14 +60,14 @@ let PhotosHelper = {
 
   getCategory: function (photo, prop) {
     return {
-      key: StringsHelper.humanize(prop).capitalize(),
+      key: prop.humanize().capitalize(),
       value: PhotosHelper.humanizeCategory(photo[prop])
     }
   },
 
   getDefault: function (photo, prop) {
     return {
-      key: StringsHelper.humanize(prop).capitalize(),
+      key: prop.humanize().capitalize(),
       value: StringsHelper.humanize(photo[prop])
     }
   }
