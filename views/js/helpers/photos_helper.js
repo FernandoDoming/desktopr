@@ -1,3 +1,5 @@
+const StringsHelper = require('./../../js/helpers/strings_helper.js');
+
 const CATEGORIES = {
   0: 'Uncategorized',
   1: 'Celebrities',
@@ -35,6 +37,38 @@ let PhotosHelper = {
       return CATEGORIES[number];
     } else {
       return number;
+    }
+  },
+
+  getUser: function (photo, prop) {
+    return {
+      key: StringsHelper.humanize(prop).capitalize(),
+      value: `${photo[prop].firstname} ${photo[prop].lastname}`,
+      extra: {
+        userpic_url: photo[prop].userpic_url,
+        username : photo[prop].username
+      }
+    }
+  },
+
+  getTags: function (photo, prop) {
+    return {
+      key: 'tags',
+      value: photo[prop]
+    }
+  },
+
+  getCategory: function (photo, prop) {
+    return {
+      key: StringsHelper.humanize(prop).capitalize(),
+      value: PhotosHelper.humanizeCategory(photo[prop])
+    }
+  },
+
+  getDefault: function (photo, prop) {
+    return {
+      key: StringsHelper.humanize(prop).capitalize(),
+      value: StringsHelper.humanize(photo[prop])
     }
   }
 };
