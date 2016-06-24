@@ -85,5 +85,16 @@
         {{/each}}
       </div>
     </script>
+
+    <script id="palette_template" type="text/x-handlebars-template">
+      <div style="margin: 20px 15px;">
+        <h4 class="subtle">Color Palette</h4>
+        {{#each entries}}
+          {{#each this.value }}
+            <span class="tag">{{ this }}</span>
+          {{/each}}
+        {{/each}}
+      </div>
+    </script>
   </body>
 </html>

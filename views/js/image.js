@@ -55,10 +55,7 @@ function showcase(error, results) {
   if (error) { return; }
 
   let photo = results.photo;
-
-  let img = document.getElementById('showcase');
-  img.src = photo.image_url;
-  let vibrant = new Vibrant(img);
+  getPalette(photo);
 
   for (let key of Object.keys(CONSTANTS.PHOTOS)) {
     let entries = CONSTANTS.PHOTOS[key].map(function (prop) {
@@ -71,4 +68,27 @@ function showcase(error, results) {
       entries: entries
     }));
   }
+}
+
+function getPalette(photo) {
+  let oReq = new XMLHttpRequest();
+  let reader = new FileReader();
+  reader.onload = function (evt) {
+    // Read out file contents as a Data URL
+    let result = evt.target.result;
+    let img = document.createElement('img');
+    img.src = result;
+    let vibrant = Vibrant.from(img).useImage(Image.Browser).getPalette(function (err, palette) {
+
+    });
+  };
+
+  oReq.open("GET", photo.image_url, true);
+  oReq.responseType = "arraybuffer";
+  oReq.onload = function(oEvent) {
+    let blob = new Blob([oReq.response], {type: "image/png"});
+    reader.readAsDataURL(blob);
+  };
+
+  oReq.send();
 }
