@@ -4,7 +4,6 @@ const API500px = require('500px');
 const api500px = new API500px('9FNw3T1ywcR5PC0LMsTxrsSm6CH47HAYENQvh81L');
 const $ = window.$ = window.jQuery = require('jquery');
 const Handlebars = require('handlebars');
-const Vibrant = require('node-vibrant');
 const Snackbar = require('./../js/snackbar.js');
 const Drawer = require('./../js/drawer.js');
 const StringsHelper = require('./../js/helpers/strings_helper.js');
@@ -55,7 +54,12 @@ function showcase(error, results) {
   if (error) { return; }
 
   let photo = results.photo;
-  getPalette(photo);
+  document.getElementById('showcase').src = photo.image_url;
+  getPalette(photo, function (swatches) {
+    for (let swatch of swatches) {
+      
+    }
+  });
 
   for (let key of Object.keys(CONSTANTS.PHOTOS)) {
     let entries = CONSTANTS.PHOTOS[key].map(function (prop) {
@@ -70,7 +74,7 @@ function showcase(error, results) {
   }
 }
 
-function getPalette(photo) {
+function getPalette(photo, cb) {
   let oReq = new XMLHttpRequest();
   let reader = new FileReader();
   reader.onload = function (evt) {
@@ -78,9 +82,10 @@ function getPalette(photo) {
     let result = evt.target.result;
     let img = document.createElement('img');
     img.src = result;
-    let vibrant = Vibrant.from(img).useImage(Image.Browser).getPalette(function (err, palette) {
 
-    });
+    let vibrant = new Vibrant(img);
+    let swatches = vibrant.swatches();
+    cb(swatches);
   };
 
   oReq.open("GET", photo.image_url, true);
