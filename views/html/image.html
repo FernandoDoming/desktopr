@@ -19,7 +19,7 @@
     <script type="text/javascript" src="../js/image.js"></script>
     <!-- Templates -->
     <script id="displayable_details_template" type="text/x-handlebars-template">
-      <div style="margin: 20px 15px;">
+      <div class="sidebar-section">
         <h4 class="subtle">More details</h4>
         {{#each entries}}
         <div class="entry">
@@ -78,7 +78,7 @@
     </script>
 
     <script id="tags_template" type="text/x-handlebars-template">
-      <div style="margin: 20px 15px;">
+      <div class="sidebar-section">
         <h4 class="subtle">Tags</h4>
         {{#each entries}}
           {{#each this.value }}
@@ -89,7 +89,7 @@
     </script>
 
     <script id="palette_template" type="text/x-handlebars-template">
-      <div style="margin: 20px 15px;">
+      <div class="sidebar-section">
         <h4 class="subtle">Color Palette</h4>
         <div class="palette"></div>
       </div>
