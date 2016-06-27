@@ -90,17 +90,24 @@
     <script id="palette_template" type="text/x-handlebars-template">
       <div style="margin: 20px 15px;">
         <h4 class="subtle">Color Palette</h4>
-        <div class="progress">
-          {{#each entries}}
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow=""
-              aria-valuemin="0" aria-valuemax="100"
-              style="width: 20%; background-image: linear-gradient(to bottom,{{ this }} 0,{{ this }} 100%)"
-              data-toggle="tooltip" data-placement="top" title="">
-                <span class="sr-only">50%</span>
-            </div>
-          {{/each}}
-        </div>
+        <div id="drawer-palette"></div>
       </div>
+    </script>
+
+    <script id="palette_template_content" type="text/x-handlebars-template">
+      <div class="progress">
+        {{#each entries}}
+          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow=""
+            aria-valuemin="0" aria-valuemax="100"
+            style="width: 20%; background-image: linear-gradient(to bottom,{{ this.color }} 0,{{ this.color }} 100%)"
+            data-toggle="tooltip" data-placement="top" title="{{ this.title }}">
+          </div>
+        {{/each}}
+      </div>
+
+      <script type="text/javascript">
+        $('[data-toggle="tooltip"]').tooltip();
+      </script>
     </script>
   </body>
 </html>

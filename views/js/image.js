@@ -3,6 +3,7 @@ const ipc = electron.ipcRenderer;
 const API500px = require('500px');
 const api500px = new API500px('9FNw3T1ywcR5PC0LMsTxrsSm6CH47HAYENQvh81L');
 const $ = window.$ = window.jQuery = require('jquery');
+const bootstrap = require('./../js/bootstrap.min.js');
 const Handlebars = require('handlebars');
 const Snackbar = require('./../js/snackbar.js');
 const Drawer = require('./../js/drawer.js');
@@ -55,15 +56,18 @@ function showcase(error, results) {
 
   let photo = results.photo;
   document.getElementById('showcase').src = photo.image_url;
-  getPalette(photo, function (swatches) {
+  PhotosHelper.getPalette(photo, function (swatches) {
     let colors = [];
     for (let swatch in swatches) {
       if (!swatches.hasOwnProperty(swatch)) continue;
       if (swatches[swatch] == null) continue;
-      colors.push(swatches[swatch].getHex());
+      colors.push({
+        color: swatches[swatch].getHex(),
+        title: swatch
+      });
     }
-    let template = Handlebars.compile( $('#palette_template').html() );
-    $('body').append(template({
+    let template = Handlebars.compile( $('#palette_template_content').html() );
+    $('#drawer-palette').append(template({
       entries: colors
     }));
   });
@@ -72,35 +76,14 @@ function showcase(error, results) {
     let entries = CONSTANTS.PHOTOS[key].map(function (prop) {
       let fn = PhotosHelper[`get${prop.capitalize()}`] || PhotosHelper.getDefault;
       return fn(photo, prop);
-    }).filter(function(e) { return e.value === 0 || e.value });
+    }).filter(function(e) {
+      if (e == undefined) return false;
+      return e.value === 0 || e.value;
+    });
 
     let template = Handlebars.compile( $(`#${key.toLowerCase()}_template`).html() );
     $('#drawer').append(template({
       entries: entries
     }));
   }
-}
-
-function getPalette(photo, cb) {
-  let oReq = new XMLHttpRequest();
-  let reader = new FileReader();
-  reader.onload = function (evt) {
-    // Read out file contents as a Data URL
-    let result = evt.target.result;
-    let img = document.createElement('img');
-    img.src = result;
-
-    let vibrant = new Vibrant(img);
-    let swatches = vibrant.swatches();
-    cb(swatches);
-  };
-
-  oReq.open("GET", photo.image_url, true);
-  oReq.responseType = "arraybuffer";
-  oReq.onload = function(oEvent) {
-    let blob = new Blob([oReq.response], {type: "image/png"});
-    reader.readAsDataURL(blob);
-  };
-
-  oReq.send();
 }

@@ -70,6 +70,30 @@ let PhotosHelper = {
       key: prop.humanize().capitalize(),
       value: StringsHelper.humanize(photo[prop])
     }
+  },
+
+  getPalette: function (photo, cb) {
+    let oReq = new XMLHttpRequest();
+    let reader = new FileReader();
+    reader.onload = function (evt) {
+      // Read out file contents as a Data URL
+      let result = evt.target.result;
+      let img = document.createElement('img');
+      img.src = result;
+
+      let vibrant = new Vibrant(img);
+      let swatches = vibrant.swatches();
+      cb(swatches);
+    };
+
+    oReq.open("GET", photo.image_url, true);
+    oReq.responseType = "arraybuffer";
+    oReq.onload = function(oEvent) {
+      let blob = new Blob([oReq.response], {type: "image/png"});
+      reader.readAsDataURL(blob);
+    };
+
+    oReq.send();
   }
 };
 
