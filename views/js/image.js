@@ -56,9 +56,16 @@ function showcase(error, results) {
   let photo = results.photo;
   document.getElementById('showcase').src = photo.image_url;
   getPalette(photo, function (swatches) {
-    for (let swatch of swatches) {
-      
+    let colors = [];
+    for (let swatch in swatches) {
+      if (!swatches.hasOwnProperty(swatch)) continue;
+      if (swatches[swatch] == null) continue;
+      colors.push(swatches[swatch].getHex());
     }
+    let template = Handlebars.compile( $('#palette_template').html() );
+    $('body').append(template({
+      entries: colors
+    }));
   });
 
   for (let key of Object.keys(CONSTANTS.PHOTOS)) {
@@ -67,7 +74,7 @@ function showcase(error, results) {
       return fn(photo, prop);
     }).filter(function(e) { return e.value === 0 || e.value });
 
-    let template = Handlebars.compile( $(`#${key.toLowerCase()}_template`).html() )
+    let template = Handlebars.compile( $(`#${key.toLowerCase()}_template`).html() );
     $('#drawer').append(template({
       entries: entries
     }));
