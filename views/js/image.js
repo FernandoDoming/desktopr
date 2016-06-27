@@ -69,7 +69,7 @@ function showcase(error, results) {
     let template = Handlebars.compile( $('#palette_template_content').html() );
     $('.palette').append(template({
       entries: colors
-    }));
+    })).addClass('show');
   });
 
   for (let key of Object.keys(CONSTANTS.PHOTOS)) {

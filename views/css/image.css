@@ -111,11 +111,15 @@ body, html {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 5px;
+  height: 0;
   transition: height 300ms ease-in-out;
 }
 
-#bottom-palette:hover {
+#bottom-palette.show {
+  height: 5px;
+}
+
+#bottom-palette.show:hover {
   height: 15px;
 }
 
