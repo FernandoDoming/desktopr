@@ -67,7 +67,7 @@ function showcase(error, results) {
       });
     }
     let template = Handlebars.compile( $('#palette_template_content').html() );
-    $('#drawer-palette').append(template({
+    $('.palette').append(template({
       entries: colors
     }));
   });
