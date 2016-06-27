@@ -3,6 +3,7 @@ const ipc = electron.ipcRenderer;
 const API500px = require('500px');
 const api500px = new API500px('9FNw3T1ywcR5PC0LMsTxrsSm6CH47HAYENQvh81L');
 const $ = window.$ = window.jQuery = require('jquery');
+const bootstrap = require('./../js/bootstrap.min.js');
 const Handlebars = require('handlebars');
 const Snackbar = require('./../js/snackbar.js');
 const Drawer = require('./../js/drawer.js');
@@ -13,10 +14,6 @@ const CONSTANTS = require('./../js/constants.js');
 
 let drawer = null;
 let snackbar = null;
-
-String.prototype.capitalize = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-}
 
 Handlebars.registerHelper('if_eq', function(a, b, opts) {
     if(a == b) {
@@ -58,48 +55,33 @@ function showcase(error, results) {
   if (error) { return; }
 
   let photo = results.photo;
-
   document.getElementById('showcase').src = photo.image_url;
+  PhotosHelper.getPalette(photo, function (swatches) {
+    let colors = [];
+    for (let swatch in swatches) {
+      if (!swatches.hasOwnProperty(swatch)) continue;
+      if (swatches[swatch] == null) continue;
+      colors.push({
+        color: swatches[swatch].getHex(),
+        title: swatch
+      });
+    }
+    let template = Handlebars.compile( $('#palette_template_content').html() );
+    $('.palette').append(template({
+      entries: colors
+    }));
+  });
 
   for (let key of Object.keys(CONSTANTS.PHOTOS)) {
     let entries = CONSTANTS.PHOTOS[key].map(function (prop) {
-      if (photo[prop] != null && photo[prop] !== '') {
-        switch (prop) {
-          case 'user':
-            return {
-              key: StringsHelper.humanize(prop).capitalize(),
-              value: `${photo[prop].firstname} ${photo[prop].lastname}`,
-              extra: {
-                userpic_url: photo[prop].userpic_url,
-                username : photo[prop].username
-              }
-            }
-            break;
+      let fn = PhotosHelper[`get${prop.capitalize()}`] || PhotosHelper.getDefault;
+      return fn(photo, prop);
+    }).filter(function(e) {
+      if (e == undefined) return false;
+      return e.value === 0 || e.value;
+    });
 
-          case 'tags':
-            return {
-              key: 'tags',
-              value: photo[prop]
-            }
-            break;
-
-          case 'category':
-            return {
-              key: StringsHelper.humanize(prop).capitalize(),
-              value: PhotosHelper.humanizeCategory(photo[prop])
-            }
-            break;
-
-          default:
-            return {
-              key: StringsHelper.humanize(prop).capitalize(),
-              value: StringsHelper.humanize(photo[prop])
-            }
-        }
-      }
-    }).filter(function(e) { return e; });
-
-    let template = Handlebars.compile( $(`#${key.toLowerCase()}_template`).html() )
+    let template = Handlebars.compile( $(`#${key.toLowerCase()}_template`).html() );
     $('#drawer').append(template({
       entries: entries
     }));
