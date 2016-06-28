@@ -13,8 +13,11 @@
       <div class="tab-item active" data-key="general">
         General
       </div>
+      <div class="tab-item" data-key="gallery">
+        Gallery
+      </div>
       <div class="tab-item" data-key="menu">
-        Menu
+        Menu Bar
       </div>
       <div class="tab-item" data-key="sources">
         Sources
@@ -31,6 +34,27 @@
           <input type="checkbox" data-key="allow_nsfw"> Allow NSFW images
         </div>
       </div>
+
+      <div id="gallery" class="section" data-tab="gallery">
+        <h2>Layout</h4>
+        <div class="form-group">
+          <label for="layout">Layout style:</label>
+          <select class="form-control" id="layout">
+            <option>List</option>
+            <option>Columns</option>
+          </select>
+        </div>
+        <h4>Column layout</h4>
+        <div class="form-group">
+          <label for="layout">Number of columns:</label>
+          <select class="form-control" id="layout">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+          </select>
+        </div>
+      </div>
+
       <div id="keys" class="section" data-tab="menu">
         <h2>Menu settings</h2>
         <h4>Keys</h4>
@@ -39,6 +63,7 @@
         <input type="radio" name="menu_on_alt" value="false" data-key="menu_on_alt">
           <span class="inline-code">Regular click</span> opens the menu, <span class="inline-code">alt-click / right-click</span> sets a random background <br/>
       </div>
+
       <div id="sources" class="section" data-tab="sources">
         <h2>Sources</h2>
           <div class="checkbox-opt">
