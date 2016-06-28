@@ -4,10 +4,23 @@
 
     <link rel="stylesheet" href="../css/options.css">
     <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="../css/photon.min.css">
   </head>
   <body>
+    <div class="tab-group">
+      <div class="tab-item active" data-key="general">
+        General
+      </div>
+      <div class="tab-item" data-key="menu">
+        Menu
+      </div>
+      <div class="tab-item" data-key="sources">
+        Sources
+      </div>
+    </div>
+
     <div class="settings">
-      <div id="general" class="section">
+      <div id="general" class="section" data-tab="general" style="display: block;">
         <h2>General settings</h2>
         <div class="checkbox-opt">
           <input type="checkbox" data-key="open_gallery"> Show gallery at startup
@@ -16,7 +29,7 @@
           <input type="checkbox" data-key="allow_nsfw"> Allow NSFW images
         </div>
       </div>
-      <div id="keys" class="section">
+      <div id="keys" class="section" data-tab="menu">
         <h2>Menu settings</h2>
         <h4>Keys</h4>
         <input type="radio" name="menu_on_alt" value="true" data-key="menu_on_alt">
@@ -24,7 +37,7 @@
         <input type="radio" name="menu_on_alt" value="false" data-key="menu_on_alt">
           <span class="inline-code">Regular click</span> opens the menu, <span class="inline-code">alt-click / right-click</span> sets a random background <br/>
       </div>
-      <div id="sources" class="section">
+      <div id="sources" class="section" data-tab="sources">
         <h2>Sources</h2>
           <div class="checkbox-opt">
             <input type="checkbox" data-key="EditorsChoice"> Editors' Choice

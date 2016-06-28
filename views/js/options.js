@@ -13,6 +13,14 @@ ipc.on('init-settings', function (sender, settings) {
 
 ipc.send('request-settings');
 
+$('.tab-item').click(function () {
+  $('.tab-item.active').removeClass('active');
+  $(this).addClass('active');
+  let tab = $(this).data('key');
+  $(`.settings [data-tab]`).css({ display: 'none' });
+  $(`.settings [data-tab="${tab}"]`).css({ display: 'block' });
+});
+
 $('#general input[type="checkbox"]').on('click', function () {
   ipc.send('set-option', {
     key: $(this).data('key'),
