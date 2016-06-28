@@ -1,10 +1,13 @@
 .settings {
   padding: 0 5%;
-  font-family: sans-serif;
+  font-family: 'Roboto';
 }
 
 .settings h2 {
-  margin: 20px 0;
+  font-family: 'Roboto';
+  font-weight: 900;
+  color: #555;
+  margin: 10px 0;
 }
 
 .settings .checkbox-opt {
