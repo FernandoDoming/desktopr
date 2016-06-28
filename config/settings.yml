@@ -2,8 +2,9 @@ open_gallery: true
 allow_nsfw: false
 period: never
 menu_on_alt: false
-layout: 'columns'
-n_columns: 2
 sources:
     - EditorsChoice
     - Popular
+layout:
+    type: columns
+    n_columns: 2

@@ -5,6 +5,9 @@ ipc.on('init-settings', function (sender, settings) {
   $('input[type="checkbox"][data-key="open_gallery"]').attr('checked', settings.open_gallery);
   $('input[type="checkbox"][data-key="allow_nsfw"]').attr('checked', settings.allow_nsfw);
   $('input[type="radio"][data-key="menu_on_alt"][value="' + settings.menu_on_alt + '"]').prop('checked', true);
+  for (let key in settings.layout) {
+    $(`#gallery #${key}`).val(settings.layout[key]);
+  }
 
   settings.sources.forEach(function (e) {
     $(`input[type="checkbox"][data-key="${e}"]`).prop('checked', true);

@@ -14,7 +14,9 @@ constants.SETTINGS.DEFAULTS = {
                                 allow_nsfw: true,
                                 period: 'never',
                                 menu_on_alt: false,
-                                sources: []
+                                sources: ['EditorsChoice', 'Popular'],
+                                layout: 'columns',
+                                n_columns: 2
                               };
 
 constants.INTERVALS = {
