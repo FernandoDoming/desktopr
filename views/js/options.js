@@ -5,9 +5,8 @@ ipc.on('init-settings', function (sender, settings) {
   $('input[type="checkbox"][data-key="open_gallery"]').attr('checked', settings.open_gallery);
   $('input[type="checkbox"][data-key="allow_nsfw"]').attr('checked', settings.allow_nsfw);
   $('input[type="radio"][data-key="menu_on_alt"][value="' + settings.menu_on_alt + '"]').prop('checked', true);
-  for (let key in settings.layout) {
-    $(`#gallery #${key}`).val(settings.layout[key]);
-  }
+  $('#gallery #layout').val(settings.layout);
+  $('#gallery #n_columns').val(settings.n_columns);
 
   settings.sources.forEach(function (e) {
     $(`input[type="checkbox"][data-key="${e}"]`).prop('checked', true);
@@ -36,6 +35,23 @@ $('#keys input[type="radio"]').on('click', function () {
     key: $(this).data('key'),
     value: $(this).attr('value') === 'true' ? true : false,
   });
+});
+
+$('#gallery select').on('change', function () {
+  let key = $(this).attr('id');
+  ipc.send('set-option', {
+    key: key,
+    value: $(this).val()
+  });
+});
+
+$('#gallery #layout').on('change', function () {
+  let $nColumns = $('#gallery #n_columns');
+  if ($(this).val() === 'columns') {
+    $nColumns.prop('disabled', false);
+  } else {
+    $nColumns.prop('disabled', true);
+  }
 });
 
 $('#sources input[type="checkbox"]').on('click', function () {

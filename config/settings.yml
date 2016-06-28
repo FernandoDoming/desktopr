@@ -5,6 +5,5 @@ menu_on_alt: false
 sources:
     - EditorsChoice
     - Popular
-layout:
-    type: columns
-    n_columns: 2
+layout: columns
+n_columns: '2'

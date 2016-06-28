@@ -14,3 +14,10 @@ html, body {
   color: #bbb;
   font-weight: 900;
 }
+
+input:disabled,
+select:disabled {
+  background-color: #eee;
+  color: #888;
+  cursor: not-allowed;
+}
