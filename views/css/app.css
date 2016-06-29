@@ -2,6 +2,17 @@ html, body {
   margin: 0;
 }
 
+html, body,
+*[data-drag="true"] {
+  -webkit-app-region: drag;
+}
+
+a, input, button, .fa,
+h1, h2, h3, h4, h5, h6,
+p, *[data-no-drag="true"] {
+  -webkit-app-region: no-drag;
+}
+
 .inline-code {
   font-family: monospace;
   background-color: #eee;

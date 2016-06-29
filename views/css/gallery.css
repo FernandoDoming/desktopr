@@ -1,14 +1,3 @@
-html, body {
-  margin: 0;
-  -webkit-app-region: drag;
-}
-
-a, input, button, .fa,
-h1, h2, h3, h4, h5, h6,
-p, *[data-no-drag="true"] {
-  -webkit-app-region: no-drag;
-}
-
 .image-block {
   display: inline;
   width: 50%;
@@ -58,7 +47,7 @@ p, *[data-no-drag="true"] {
 }
 
 .overlay .actions {
-  padding: 5% 0;
+  padding: 2.5% 0;
 }
 
 .overlay .actions i {
