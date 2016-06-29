@@ -63,13 +63,15 @@ function appendImages(error, response, feature) {
   }
   $('#loading').hide();
 
-  var source   = $("#image-template").html();
-  var template = Handlebars.compile(source);
+  let source   = $(`#image-${settings.layout}-template`).html();
+  let template = Handlebars.compile(source);
+  let columnWidth = `${(100 / settings.n_columns).toFixed(2)}%`;
+
   response.photos.forEach(function (photo) {
 
     if (photo.nsfw && !settings.allow_nsfw) return;
 
-    var context = {
+    let context = {
       title: photo.name,
       src: photo.image_url,
       id: photo.id,
@@ -78,16 +80,17 @@ function appendImages(error, response, feature) {
       nsfw: photo.nsfw,
       width: photo.width,
       height: photo.height,
-      feature: StringsHelper.humanize(feature)
+      feature: StringsHelper.humanize(feature),
+      columnWidth: columnWidth
     };
-    var html  = template(context);
-    var $appended = $(html).appendTo('.images');
+    let html  = template(context);
+    let $appended = $(html).appendTo('.images');
     $appended.find('[data-toggle="tooltip"]').tooltip();
   });
 
-  var container = document.querySelector('.images');
+  let container = document.querySelector('.images');
   imagesLoaded(container, function () {
-    var masonry = new Masonry(container, {
+    let masonry = new Masonry(container, {
       itemSelector: '.image-block',
       isAnimated: false
     });

@@ -26,10 +26,10 @@
     <script type="text/javascript" src="../js/gallery.js"></script>
 
     <!-- Templates -->
-    <script id="image-template" type="text/x-handlebars-template">
+    <script id="image-columns-template" type="text/x-handlebars-template">
       <div class="image-block" data-id="{{id}}" data-title="{{title}}"
             data-height="{{height}}" data-width="{{width}}"
-            style="position: absolute; bottom: 50%">
+            style="width: {{ columnWidth }};">
         <div class="overlay">
           <div class="header">
             <h3 class="title">{{title}}</h3>
