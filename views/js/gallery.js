@@ -95,7 +95,7 @@ function appendImages(error, response, feature) {
       isAnimated: false
     });
     $('.images .image-block.image-block').each(function() {
-      $(this).addClass('animated zoomIn');
+      $(this).addClass('animated fadeIn');
     });
   });
 }
