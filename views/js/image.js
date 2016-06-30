@@ -4,6 +4,7 @@ const API500px = require('500px');
 const api500px = new API500px('9FNw3T1ywcR5PC0LMsTxrsSm6CH47HAYENQvh81L');
 const $ = window.$ = window.jQuery = require('jquery');
 const bootstrap = require('./../js/bootstrap.min.js');
+const imagesLoaded = require('imagesloaded');
 const Handlebars = require('handlebars');
 const Snackbar = require('./../js/snackbar.js');
 const Drawer = require('./../js/drawer.js');
@@ -14,6 +15,10 @@ const CONSTANTS = require('./../js/constants.js');
 
 let drawer = null;
 let snackbar = null;
+
+imagesLoaded(document.querySelector('body'), function () {
+  $('#loading').hide();
+});
 
 Handlebars.registerHelper('if_eq', function(a, b, opts) {
     if(a == b) {
@@ -55,7 +60,7 @@ function showcase(error, results) {
   if (error) { return; }
 
   let photo = results.photo;
-  document.getElementById('showcase').src = photo.image_url;
+  $('#showcase').attr('src', photo.image_url);
   PhotosHelper.getPalette(photo, function (swatches) {
     let colors = [];
     for (let swatch in swatches) {
