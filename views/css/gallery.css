@@ -49,6 +49,11 @@
   background-color: rgba(255,255,255,0.2);
   border-left: 4px solid white;
   border-radius: 4px;
+  transition: 300ms background-color;
+}
+
+.overlay .action:hover {
+  background-color: rgba(255,255,255,0.4);
 }
 
 .overlay div,

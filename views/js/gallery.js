@@ -25,7 +25,7 @@ $(document).ready(function () {
   ipc.send('request-settings');
 });
 
-$(document).on('click', '#set-background', function () {
+$(document).on('click', '.set-background', function () {
   let $imageBlock = $(this).closest('.image-block');
   let id = $imageBlock.data('id');
   let title = $imageBlock.data('title');
@@ -34,7 +34,7 @@ $(document).on('click', '#set-background', function () {
   ipc.send('set-background', { id: id });
 });
 
-$(document).on('click', '#open-image', function () {
+$(document).on('click', '.open-image', function () {
   let $imageBlock = $(this).closest('.image-block');
 
   ipc.send('open-image', {
