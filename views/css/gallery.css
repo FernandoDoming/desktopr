@@ -1,6 +1,10 @@
 .image-block {
   display: inline;
   width: 50%;
+}
+
+.open-image,
+.set-background {
   cursor: pointer;
 }
 
@@ -17,7 +21,6 @@
   transition: opacity 300ms;
   color: white;
   z-index: 2;
-
   position: absolute;
   top: 0;
   width: 100%;
@@ -29,10 +32,6 @@
 
 .overlay:hover {
   opacity: 1;
-}
-
-.overlay .header {
-
 }
 
 .overlay .title {
