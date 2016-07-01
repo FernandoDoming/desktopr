@@ -34,9 +34,10 @@
       <div class="image-block" data-id="{{id}}" data-title="{{title}}"
             data-height="{{height}}" data-width="{{width}}"
             style="width: {{ columnWidth }};">
-        <div class="overlay open-image">
+        <div class="overlay">
           <div>
-            <h3 class="title">{{title}}</h3>
+            <h3 class="title open-image" data-toggle="tooltip"
+                data-title="Open in a new window" data-placement="top">{{title}}</h3>
             <div class="tags">
               {{#if nsfw}}
                 <span class="tag nsfw">NSFW</span>

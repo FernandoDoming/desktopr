@@ -67,6 +67,7 @@ function appendImages(error, response, feature) {
   let template = Handlebars.compile(source);
   let columnWidth = `${(100 / settings.n_columns).toFixed(2)}%`;
 
+  let $newImages = [];
   response.photos.forEach(function (photo) {
 
     if (photo.nsfw && !settings.allow_nsfw) return;
@@ -85,6 +86,7 @@ function appendImages(error, response, feature) {
     };
     let html  = template(context);
     let $appended = $(html).appendTo('.images');
+    $newImages.push($appended);
     $appended.find('[data-toggle="tooltip"]').tooltip();
   });
 
@@ -94,8 +96,14 @@ function appendImages(error, response, feature) {
       itemSelector: '.image-block',
       isAnimated: false
     });
-    $('.images .image-block.image-block').each(function() {
-      $(this).addClass('animated fadeIn');
+
+    $newImages.forEach(function($image) {
+      $image.addClass('animated fadeInUpBig');
+      // Delete classes when animation ends
+      // so masonry can reallocate images on grid
+      $image.one('webkitAnimationEnd oanimationend animationend', function () {
+        $image.removeClass('fadeInUpBig');
+      });
     });
   });
 }
