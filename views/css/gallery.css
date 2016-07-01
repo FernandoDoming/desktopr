@@ -61,8 +61,19 @@
   color: white;
 }
 
-.overlay #tags {
+.overlay .tags {
   margin-bottom: 15px;
+}
+
+.overlay .tags .tag {
+  padding: 3px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  background-color: #3B2E50;
+}
+
+.overlay .tags .tag.nsfw {
+  background-color: #bc234b;
 }
 
 .overlay .footer {
@@ -79,11 +90,4 @@
 .overlay .actions i {
   color: white;
   cursor: pointer;
-}
-
-.tag.nsfw {
-  padding: 3px 5px;
-  background-color: #bc234b;
-  border-radius: 3px;
-  font-size: 12px;
 }

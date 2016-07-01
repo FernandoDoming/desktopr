@@ -37,10 +37,11 @@
         <div class="overlay open-image">
           <div>
             <h3 class="title">{{title}}</h3>
-            <div id="tags">
+            <div class="tags">
               {{#if nsfw}}
                 <span class="tag nsfw">NSFW</span>
               {{/if}}
+              <span class="tag">{{ feature }}</span>
             </div>
             <span class="action set-background">SET AS BACKGROUND</span>
           </div>
