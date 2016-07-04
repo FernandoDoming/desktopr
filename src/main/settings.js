@@ -1,23 +1,22 @@
-var YAML = require('yamljs');
-var fs = require('fs');
-var winston = require('winston');
-var process = require('process');
+const YAML = require('yamljs');
+const fs = require('fs');
+const Logger = require.main.require('./src/main/logger.js');
 
 const CONSTANTS = require.main.require('./src/constants/constants.js');
 
-var settings = {};
+let settings = {};
 
 settings.load = function () {
   return YAML.load(CONSTANTS.SETTINGS.FILE);
 };
 
 settings.save = function (settings) {
-  var yaml = YAML.stringify(settings);
+  let yaml = YAML.stringify(settings);
   fs.writeFile(CONSTANTS.SETTINGS.FILE, yaml, function (error) {
     if (error) {
-      winston.error('[x] Error writting settings');
+      Logger.error('[x] Error writting settings');
     }
-    winston.info('[*] Settings saved');
+    Logger.info('[*] Settings saved');
   });
 };
 

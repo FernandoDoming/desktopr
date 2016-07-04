@@ -7,7 +7,7 @@ const ipc = electron.ipcMain;
 
 const fs = require('fs');
 const request = require('request');
-const winston = require('winston');
+const Logger = require('./src/main/logger.js');
 const wallpaper = require('wallpaper');
 const Settings = require('./src/main/settings.js');
 const Templates = require('./src/constants/templates.js');
@@ -25,7 +25,7 @@ app.on('ready', function () {
   tray = new Tray(CONSTANTS.ICONS_PATH + 'IconTemplate.png');
 
   App.service.on('fetch', function (background) {
-    winston.info('[*] Got a picture: ' + background.id + '. Saving to disk...');
+    Logger.info('[*] Got a picture: ' + background.id + '. Saving to disk...');
     const IMAGE_FILE = CONSTANTS.IMAGES_PATH + background.id + '.' + background.image_format;
     var stream = fs.createWriteStream(IMAGE_FILE);
     request(background.image_url).pipe(stream).on('close', function () {
@@ -45,7 +45,7 @@ app.on('ready', function () {
         !event.altKey && !App.settings.menu_on_alt) {
       tray.popUpContextMenu(App.contextMenu);
     } else {
-      winston.info('[*] Getting images...');
+      Logger.info('[*] Getting images...');
       App.service.newBackground();
       tray.setImage(CONSTANTS.ICONS_PATH + '/IconDownload.png');
     }
@@ -65,7 +65,7 @@ app.on('activate', function () {
 
 // IPC events
 ipc.on('set-background', function (event, data) {
-  winston.info('[*] Requested to get ' + data.id);
+  Logger.info('[*] Requested to get ' + data.id);
   App.service.setBackgroundById(data.id);
 });
 

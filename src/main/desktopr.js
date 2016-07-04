@@ -1,5 +1,5 @@
 var events = require('events');
-var winston = require('winston');
+const Logger = require.main.require('./src/main/logger.js');
 var wallpaper = require('wallpaper');
 var fs = require('fs');
 var request = require('request');
@@ -22,7 +22,7 @@ function Desktopr(options) {
 
   _this.newBackground = function () {
     var feature = CONSTANTS.FEATURES[Math.floor(Math.random() * CONSTANTS.FEATURES.length)];
-    winston.info('[*] Getting image from ' + feature);
+    Logger.info('[*] Getting image from ' + feature);
     _this['new' + feature + 'Background']();
   };
 
@@ -57,7 +57,7 @@ Desktopr.prototype.__proto__ = events.EventEmitter.prototype;
 function fetchImage(error, results) {
 
   if (error) {
-    winston.error('[x] 500px returned error ' + error.code + ': ' + error.message);
+    Logger.error('[x] 500px returned error ' + error.code + ': ' + error.message);
     return;
   }
 
@@ -76,28 +76,28 @@ function fetchImage(error, results) {
     background = results.photo;
   }
 
-  winston.debug('[+] Got ' + background.id + '. Emitting fetch...');
+  Logger.debug('[+] Got ' + background.id + '. Emitting fetch...');
   _this.emit('fetch', background);
 }
 
 function setBackground(error, results) {
 
   if (error) {
-    winston.error('[x] 500px returned error ' + error.code + ': ' + error.message);
+    Logger.error('[x] 500px returned error ' + error.code + ': ' + error.message);
     return;
   }
 
   var image = results.photo;
-  winston.info('[*] Got a picture: ' + image.id + '. Saving to disk...');
+  Logger.info('[*] Got a picture: ' + image.id + '. Saving to disk...');
 
   const IMAGE_FILE = _this.options.images_path + image.id + '.' + image.image_format;
   var stream = fs.createWriteStream(IMAGE_FILE);
   request(image.image_url).pipe(stream).on('close', function () {
-    winston.info('[*] Saved ' + image.id + ' to disk')
+    Logger.info('[*] Saved ' + image.id + ' to disk')
     wallpaper.set(IMAGE_FILE).then(function () {
 
       //tray.setImage(ICONS_PATH + '/IconTemplate.png');
-      winston.info('[*] Set wallpaper ' + image.id);
+      Logger.info('[*] Set wallpaper ' + image.id);
 
       // Delete the file to comply with 500px API terms
       fs.unlink(image);

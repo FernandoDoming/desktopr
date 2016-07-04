@@ -2,6 +2,7 @@ const electron = require('electron');
 const app = electron.app;
 const Menu = electron.Menu;
 
+const Logger = require.main.require('./src/main/logger.js');
 const Templates = require.main.require('./src/constants/templates.js');
 const Desktopr = require.main.require('./src/main/desktopr.js');
 const Settings = require.main.require('./src/main/settings.js');
@@ -52,7 +53,7 @@ App.setWallpaper = function (image) {
   wallpaper.set(image).then(function () {
 
     tray.setImage(CONSTANTS.ICONS_PATH + '/IconTemplate.png');
-    winston.info('[*] Set wallpaper ' + image);
+    Logger.info('[*] Set wallpaper ' + image);
 
     // Delete the file to comply with 500px API terms
     fs.unlink(image);
