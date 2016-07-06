@@ -7,6 +7,7 @@ const Templates = require.main.require('./src/constants/templates.js');
 const Desktopr = require.main.require('./src/main/desktopr.js');
 const Settings = require.main.require('./src/main/settings.js');
 const Gallery = require.main.require('./src/ui/gallery.js');
+const Database = require.main.require('./src/main/database.js');
 const Options = require.main.require('./src/ui/options.js');
 const CONSTANTS = require.main.require('./src/constants/constants.js');
 
