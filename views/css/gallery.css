@@ -4,7 +4,8 @@
 }
 
 .open-image,
-.set-background {
+.set-background,
+.action {
   cursor: pointer;
 }
 
@@ -52,6 +53,11 @@
 
 .overlay .action:hover {
   background-color: rgba(255,255,255,0.4);
+}
+
+.overlay .action .fa {
+  position: relative;
+  right: 5px;
 }
 
 .overlay div,

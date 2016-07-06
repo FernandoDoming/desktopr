@@ -58,6 +58,10 @@ select:disabled {
   animation: colors 5.6s ease-in-out infinite;
 }
 
+.fa.fa-heart.red {
+  color: #da2929;
+}
+
 /* Loading spinner */
 .spinner {
   -webkit-animation: rotator 1.4s linear infinite;
