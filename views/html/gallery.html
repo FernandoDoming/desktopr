@@ -36,7 +36,7 @@
             style="width: {{ columnWidth }};">
         <div class="overlay">
           <div>
-            <h3 class="title open-image" data-toggle="tooltip"
+            <h3 class="title" data-toggle="tooltip" data-event="open-image"
                 data-title="Open in a new window" data-placement="top">{{title}}</h3>
             <div class="tags">
               {{#if nsfw}}
@@ -44,8 +44,8 @@
               {{/if}}
               <span class="tag">{{ feature }}</span>
             </div>
-            <span class="action set-background">SET AS BACKGROUND</span>
-            <span class="action set-fav"><i class="fa fa-heart"></i></span>
+            <span class="action" data-event="set-background">SET AS BACKGROUND</span>
+            <span class="action" data-event="set-fav"><i class="fa fa-heart"></i></span>
           </div>
         </div>
         <div class="body">

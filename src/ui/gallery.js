@@ -3,6 +3,8 @@ const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const ipc = electron.ipcMain;
 const ImageWindow = require.main.require('./src/ui/image.js');
+const Database = require.main.require('./src/main/database.js');
+const Logger = require.main.require('./src/main/logger.js');
 
 const Templates = require.main.require('./src/constants/templates.js');
 const CONSTANTS = require.main.require('./src/constants/constants.js');
@@ -22,6 +24,12 @@ ipc.on('open-image', function(event, image) {
     gallery.imageWindows.splice(gallery.imageWindows.indexOf(imageWindow), 1);
     imageWindow = null;
   });
+});
+
+ipc.on('set-fav', function(event, image) {
+  Database.execute(`INSERT INTO favorites (photo_id, date_added, url, data) ` +
+                   `VALUES (${image.id}, ${Date.now()}, "${image.url || null}", ${image.data || null});`);
+  Logger.info(`New favorite ${image.id} saved`);
 });
 
 gallery.show = function () {

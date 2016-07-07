@@ -3,8 +3,8 @@
   width: 50%;
 }
 
-.open-image,
-.set-background,
+[data-event="open-image"],
+[data-event="set-background"],
 .action {
   cursor: pointer;
 }

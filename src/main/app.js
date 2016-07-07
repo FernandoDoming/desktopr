@@ -17,6 +17,7 @@ let interval = null;
 let settings = Settings.load();
 
 App.exit = function() {
+  Database.close();
   app.quit();
 };
 

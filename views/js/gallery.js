@@ -15,6 +15,8 @@ let snackbar = new Snackbar();
 const RPP = 10;
 let settings = null;
 let page = 1;
+let clickableClasses = ['[data-event="open-image"]', '[data-event="set-fav"]',
+                        '[data-event="set-background"]'];
 
 ipc.on('init-settings', function (sender, opts) {
   settings = opts;
@@ -25,22 +27,19 @@ $(document).ready(function () {
   ipc.send('request-settings');
 });
 
-$(document).on('click', '.set-background', function () {
+$(document).on('click', clickableClasses.join(','), function () {
   let $imageBlock = $(this).closest('.image-block');
-  let id = $imageBlock.data('id');
-  let title = $imageBlock.data('title');
+  let event = $(this).data('event');
 
-  snackbar.show(`Setting ${title} as the background`);
-  ipc.send('set-background', { id: id });
-});
+  if (event === 'set-background') {
+    snackbar.show(`Setting ${$imageBlock.data('title')} as the background`);
+  }
 
-$(document).on('click', '.open-image', function () {
-  let $imageBlock = $(this).closest('.image-block');
-
-  ipc.send('open-image', {
+  ipc.send(event, {
     id: $imageBlock.data('id'),
     width: $imageBlock.data('width'),
-    height: $imageBlock.data('height')
+    height: $imageBlock.data('height'),
+    url: $imageBlock.find('img').attr('src')
   });
 });
 
