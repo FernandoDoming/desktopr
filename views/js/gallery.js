@@ -15,21 +15,32 @@ let snackbar = new Snackbar();
 const RPP = 10;
 let settings = null;
 let page = 1;
-let clickableClasses = ['[data-event="open-image"]', '[data-event="set-fav"]',
-                        '[data-event="set-background"]'];
+let clickableClasses = '[data-event]';
 
 ipc.on('init-settings', function (sender, opts) {
   settings = opts;
   request();
 });
 
+ipc.on('fav-set', function (sender, image) {
+  let $imageBlock = $('.images').find(`[data-id="${image.id}"]`);
+  $imageBlock.find('.fa.fa-heart').addClass('red');
+  $imageBlock.find('[data-event="set-fav"]').attr('data-event', 'remove-fav');
+});
+
+ipc.on('fav-removed', function (sender, image) {
+  let $imageBlock = $('.images').find(`[data-id="${image.id}"]`);
+  $imageBlock.find('.fa.fa-heart').removeClass('red');
+  $imageBlock.find('[data-event="remove-fav"]').attr('data-event', 'set-fav');
+});
+
 $(document).ready(function () {
   ipc.send('request-settings');
 });
 
-$(document).on('click', clickableClasses.join(','), function () {
+$(document).on('click', '[data-event]', function () {
   let $imageBlock = $(this).closest('.image-block');
-  let event = $(this).data('event');
+  let event = $(this).attr('data-event');
 
   if (event === 'set-background') {
     snackbar.show(`Setting ${$imageBlock.data('title')} as the background`);

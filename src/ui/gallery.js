@@ -27,9 +27,25 @@ ipc.on('open-image', function(event, image) {
 });
 
 ipc.on('set-fav', function(event, image) {
-  Database.execute(`INSERT INTO favorites (photo_id, date_added, url, data) ` +
-                   `VALUES (${image.id}, ${Date.now()}, "${image.url || null}", ${image.data || null});`);
-  Logger.info(`New favorite ${image.id} saved`);
+  try {
+    Database.execute(`INSERT INTO favorites (photo_id, date_added, url, data) ` +
+                     `VALUES (${image.id}, ${Date.now()}, "${image.url || null}", ${image.data || null});`);
+    Logger.info(`New favorite ${image.id} saved`);
+    event.sender.send('fav-set', image);
+  } catch (err) {
+    Logger.error(`Could not save favorite ${image.id} to database: ${err.message}`);
+  }
+});
+
+ipc.on('remove-fav', function(event, image) {
+  try {
+    Database.execute(`DELETE FROM favorites ` +
+                     `WHERE photo_id=${image.id}`);
+    Logger.info(`Favorite ${image.id} deleted`);
+    event.sender.send('fav-removed', image);
+  } catch (err) {
+    Logger.error(`Could not remove favorite ${image.id}: ${err.message}`);
+  }
 });
 
 gallery.show = function () {
