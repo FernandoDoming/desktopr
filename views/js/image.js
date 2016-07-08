@@ -10,6 +10,7 @@ const Snackbar = require('./../js/snackbar.js');
 const Drawer = require('./../js/drawer.js');
 const StringsHelper = require('./../js/helpers/strings_helper.js');
 const PhotosHelper = require('./../js/helpers/photos_helper.js');
+const HandlebarsHelper = require('./../js/helpers/handlebars_helper.js');
 
 const CONSTANTS = require('./../js/constants.js');
 
@@ -18,26 +19,6 @@ let snackbar = null;
 
 imagesLoaded(document.querySelector('body'), function () {
   $('#loading').hide();
-});
-
-Handlebars.registerHelper('if_eq', function(a, b, opts) {
-    if(a == b) {
-      return opts.fn(this);
-    } else {
-      return opts.inverse(this);
-    }
-});
-
-Handlebars.registerHelper("debug", function(optionalValue) {
-  console.log("Current Context");
-  console.log("====================");
-  console.log(this);
-
-  if (optionalValue) {
-    console.log("Value");
-    console.log("====================");
-    console.log(optionalValue);
-  }
 });
 
 ipc.on('request-image', function (event, data) {

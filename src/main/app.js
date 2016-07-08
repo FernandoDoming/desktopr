@@ -1,6 +1,7 @@
 const electron = require('electron');
 const app = electron.app;
 const Menu = electron.Menu;
+const ipc = electron.ipcMain;
 
 const Logger = require.main.require('./src/main/logger.js');
 const Templates = require.main.require('./src/constants/templates.js');
@@ -15,6 +16,18 @@ let App = {};
 
 let interval = null;
 let settings = Settings.load();
+
+ipc.on('request-favs', function (event, _) {
+  let ids = [];
+  Database.each('SELECT photo_id FROM favorites;',
+    function (row) {
+      // Callback for each element
+      ids.push(row.photo_id);
+    }, function () {
+      // Callback on done
+      event.sender.send('got-favs', ids);
+    });
+});
 
 App.exit = function() {
   Database.close();

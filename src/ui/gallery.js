@@ -39,8 +39,7 @@ ipc.on('set-fav', function(event, image) {
 
 ipc.on('remove-fav', function(event, image) {
   try {
-    Database.execute(`DELETE FROM favorites ` +
-                     `WHERE photo_id=${image.id}`);
+    Database.execute(`DELETE FROM favorites WHERE photo_id=${image.id}`);
     Logger.info(`Favorite ${image.id} deleted`);
     event.sender.send('fav-removed', image);
   } catch (err) {

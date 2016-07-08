@@ -3,6 +3,10 @@
   width: 50%;
 }
 
+.image-block.fav .fa.fa-heart {
+  color: #da2929;
+}
+
 [data-event="open-image"],
 [data-event="set-background"],
 .action {
