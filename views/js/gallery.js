@@ -26,7 +26,6 @@ ipc.on('init-settings', function (sender, opts) {
 });
 
 ipc.on('got-favs', function(event, ids) {
-  console.log(`Got favs: ${ids}`);
   favs = ids;
 });
 
