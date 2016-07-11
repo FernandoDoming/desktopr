@@ -26,6 +26,10 @@ p, *[data-no-drag="true"] {
   font-weight: 900;
 }
 
+.opaque {
+  opacity: 1 !important;
+}
+
 input:disabled,
 select:disabled {
   background-color: #eee;
@@ -33,12 +37,20 @@ select:disabled {
   cursor: not-allowed;
 }
 
-#loading {
+#loading,
+#fade {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#fade {
+  background-color: rgba(33,33,33,0.6);
+  z-index: 2;
+  position: fixed;
+  top: 0;
 }
 
 #end {

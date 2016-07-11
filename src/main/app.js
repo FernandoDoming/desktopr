@@ -18,14 +18,14 @@ let interval = null;
 let settings = Settings.load();
 
 ipc.on('request-favs', function (event, _) {
-  let ids = [];
-  Database.each('SELECT photo_id FROM favorites;',
+  let favs = [];
+  Database.each('SELECT * FROM favorites;',
     function (row) {
       // Callback for each element
-      ids.push(row.photo_id);
+      favs.push(row);
     }, function () {
       // Callback on done
-      event.sender.send('got-favs', ids);
+      event.sender.send('got-favs', favs);
     });
 });
 

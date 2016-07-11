@@ -25,8 +25,8 @@ ipc.on('init-settings', function (sender, opts) {
   request();
 });
 
-ipc.on('got-favs', function(event, ids) {
-  favs = ids;
+ipc.on('got-favs', function(event, _favs) {
+  favs = _favs;
 });
 
 ipc.on('fav-set', function (sender, image) {
@@ -90,16 +90,12 @@ function appendImages(error, response, feature) {
 
     if (photo.nsfw && !settings.allow_nsfw) return;
 
-    let isFav = favs.includes(photo.id);
+    let isFav = favs.some(function (e) { return e.photo_id == photo.id; });
     let context = {
       title: photo.name,
       src: photo.image_url,
       id: photo.id,
-      author: photo.user.firstname,
-      resolution: photo.width + 'x' + photo.height,
       nsfw: photo.nsfw,
-      width: photo.width,
-      height: photo.height,
       feature: StringsHelper.humanize(feature),
       columnWidth: columnWidth,
       fav: isFav
@@ -126,4 +122,34 @@ function appendImages(error, response, feature) {
       });
     });
   });
+}
+
+function toggleFavsView() {
+  let $container = $('#favs');
+  let $footerWrapper = $('#footer-wrapper');
+  let $favToggle = $footerWrapper.find('[data-event="toggle-favs-view"]');
+
+  $container.toggleClass('hide');
+  if ($container.data('initialized') !== 'true') {
+    initFavs($container);
+  }
+  let height = $container.height();
+  if ($container.hasClass('hide')) {
+    $footerWrapper.css({ bottom: '40px' });
+  } else {
+    $footerWrapper.css({
+      bottom: height + parseInt($('#footer-wrapper').css('bottom'))
+    });
+  }
+  $footerWrapper.find('footer').toggleClass('opaque');
+  $favToggle.toggleClass('active').find('.fa')
+    .toggleClass('fa-heart-o').toggleClass('fa-heart');
+  $('#fade').toggleClass('hide');
+}
+
+function initFavs($container) {
+  favs.forEach(function(fav) {
+    $container.append(`<img src="${fav.url}" />`);
+  });
+  $container.data('initialized', 'true');
 }
