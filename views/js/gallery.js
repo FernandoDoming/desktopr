@@ -27,20 +27,17 @@ ipc.on('init-settings', function (sender, opts) {
 
 ipc.on('got-favs', function(event, _favs) {
   favs = _favs;
+  initFavs($('#favs'));
 });
 
 ipc.on('fav-set', function (sender, image) {
-  let $imageBlock = $('.images').find(`[data-id="${image.id}"]`);
-  $imageBlock.addClass('fav');
-  $imageBlock.find('[data-event="set-fav"]').attr('data-event', 'remove-fav');
+  toggleFav(image.id);
   // Refresh favs
   requestFavs();
 });
 
 ipc.on('fav-removed', function (sender, image) {
-  let $imageBlock = $('.images').find(`[data-id="${image.id}"]`);
-  $imageBlock.removeClass('fav');
-  $imageBlock.find('[data-event="remove-fav"]').attr('data-event', 'set-fav');
+  toggleFav(image.id);
   // Refresh favs
   requestFavs();
 });
@@ -130,15 +127,22 @@ function appendImages(error, response, feature) {
   });
 }
 
+function toggleFav(id) {
+  let $imageBlock = $('.images').find(`[data-id="${id}"]`);
+  $imageBlock.toggleClass('fav');
+  if ($imageBlock.find('[data-event="set-fav"]').length) {
+    $imageBlock.find('[data-event="set-fav"]').attr('data-event', 'remove-fav');
+  } else {
+    $imageBlock.find('[data-event="remove-fav"]').attr('data-event', 'set-fav');
+  }
+}
+
 function toggleFavsView() {
   let $container = $('#favs');
   let $footerWrapper = $('#footer-wrapper');
   let $favToggle = $footerWrapper.find('[data-event="toggle-favs-view"]');
 
   $container.toggleClass('hide');
-  if ($container.data('initialized') !== 'true') {
-    initFavs($container);
-  }
   let height = $container.height();
   if ($container.hasClass('hide')) {
     $footerWrapper.css({ bottom: '40px' });
@@ -154,10 +158,10 @@ function toggleFavsView() {
 }
 
 function initFavs($container) {
+  $container.html('');
   favs.forEach(function(fav) {
     $container.append(`<img src="${fav.url}" />`);
   });
-  $container.data('initialized', 'true');
 }
 
 function requestFavs() {
