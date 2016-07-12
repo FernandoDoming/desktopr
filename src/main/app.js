@@ -19,7 +19,7 @@ let settings = Settings.load();
 
 ipc.on('request-favs', function (event, _) {
   let favs = [];
-  Database.each('SELECT * FROM favorites;',
+  Database.each('SELECT * FROM favorites ORDER BY date_added DESC;',
     function (row) {
       // Callback for each element
       favs.push(row);

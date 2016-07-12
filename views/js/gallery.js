@@ -33,17 +33,21 @@ ipc.on('fav-set', function (sender, image) {
   let $imageBlock = $('.images').find(`[data-id="${image.id}"]`);
   $imageBlock.addClass('fav');
   $imageBlock.find('[data-event="set-fav"]').attr('data-event', 'remove-fav');
+  // Refresh favs
+  requestFavs();
 });
 
 ipc.on('fav-removed', function (sender, image) {
   let $imageBlock = $('.images').find(`[data-id="${image.id}"]`);
   $imageBlock.removeClass('fav');
   $imageBlock.find('[data-event="remove-fav"]').attr('data-event', 'set-fav');
+  // Refresh favs
+  requestFavs();
 });
 
 $(document).ready(function () {
   ipc.send('request-settings');
-  ipc.send('request-favs');
+  requestFavs();
 });
 
 $(document).on('click', '[data-event]', function () {
@@ -96,6 +100,8 @@ function appendImages(error, response, feature) {
       src: photo.image_url,
       id: photo.id,
       nsfw: photo.nsfw,
+      width: photo.width,
+      height: photo.height,
       feature: StringsHelper.humanize(feature),
       columnWidth: columnWidth,
       fav: isFav
@@ -152,4 +158,8 @@ function initFavs($container) {
     $container.append(`<img src="${fav.url}" />`);
   });
   $container.data('initialized', 'true');
+}
+
+function requestFavs() {
+  ipc.send('request-favs');
 }
