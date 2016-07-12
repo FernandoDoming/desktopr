@@ -11,6 +11,10 @@ let options = {
   shouldReloadOnExit: false
 };
 
+ipc.on('show-options', function(event, _) {
+  options.show();
+});
+
 options.show = function () {
   if (options.window != null) { return; }
 

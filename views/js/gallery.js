@@ -167,3 +167,7 @@ function initFavs($container) {
 function requestFavs() {
   ipc.send('request-favs');
 }
+
+function openSettingsView() {
+  ipc.send('show-options');
+}
