@@ -28,8 +28,8 @@ ipc.on('open-image', function(event, image) {
 
 ipc.on('set-fav', function(event, image) {
   try {
-    Database.execute(`INSERT INTO favorites (photo_id, date_added, url, data) ` +
-                     `VALUES (${image.id}, ${Date.now()}, "${image.url || null}", ${image.data || null});`);
+    Database.execute(`INSERT INTO favorites (photo_id, date_added, url, data, name) ` +
+                     `VALUES (${image.id}, ${Date.now()}, "${image.url || null}", ${image.data || null}, "${image.title}");`);
     Logger.info(`New favorite ${image.id} saved`);
     event.sender.send('fav-set', image);
   } catch (err) {

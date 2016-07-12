@@ -70,5 +70,23 @@
         </div>
       </div>
     </script>
+
+    <script id="fav-image-template" type="text/x-handlebars-template">
+      <div class="image-block fav" data-id="{{id}}" data-title="{{title}}">
+        <div class="overlay">
+          <div>
+            <h3 class="title" data-toggle="tooltip" data-event="open-image"
+                data-title="Open in a new window" data-placement="top">{{title}}</h3>
+            <span class="action" data-event="set-background">SET AS BACKGROUND</span>
+            <span class="action" data-event="remove-fav">
+              <i class="fa fa-heart"></i>
+            </span>
+          </div>
+        </div>
+        <div class="body">
+          <img src="{{src}}" alt="" width="100%" style="">
+        </div>
+      </div>
+    </script>
   </body>
 </html>

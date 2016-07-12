@@ -57,6 +57,7 @@ $(document).on('click', '[data-event]', function () {
 
   ipc.send(event, {
     id: $imageBlock.data('id'),
+    title: $imageBlock.data('title'),
     width: $imageBlock.data('width'),
     height: $imageBlock.data('height'),
     url: $imageBlock.find('img').attr('src')
@@ -158,9 +159,18 @@ function toggleFavsView() {
 }
 
 function initFavs($container) {
+  let source   = $(`#fav-image-template`).html();
+  let template = Handlebars.compile(source);
+
   $container.html('');
   favs.forEach(function(fav) {
-    $container.append(`<img src="${fav.url}" />`);
+    let context = {
+      title: fav.name,
+      src: fav.url,
+      id: fav.photo_id
+    };
+    let html  = template(context);
+    $container.append(html);
   });
 }
 
