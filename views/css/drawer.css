@@ -20,7 +20,7 @@
   position: fixed;
   right: -500px;
   max-width: 460px;
-  font-family: sans-serif;
+  font-family: 'Roboto';
   background-color: white;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
   height: 100%;
@@ -45,7 +45,6 @@
   padding: 0 20px;
   font-size: 24px;
   vertical-align: middle;
-  font-style: italic;
 }
 
 #drawer .top-bar .align-right {
