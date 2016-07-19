@@ -13,25 +13,24 @@ body, html {
 
 #drawer .grouped-entries {
   padding: 20px 0;
-  background-color: #f7f8fa;
+  background-color: #3F51B5;
   text-align: center;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  margin: 0;
 }
 
 #drawer .entry {
-  padding: 5px 25px;
+  padding: 10px 25px;
 }
 
 #drawer .key {
   font-weight: 500;
   margin-right: 10px;
-  color: #999;
+  color: rgba(255,255,255,0.7);
 }
 
 #drawer .value {
   font-weight: 900;
-  color: #555;
+  color: white;
 }
 
 #drawer .sidebar-section {
@@ -43,8 +42,7 @@ body, html {
 }
 
 #drawer .grouped-entries .key {
-  color: #ccc;
-  font-weight: 900;
+  font-weight: 500;
 }
 
 #drawer .entry[data-key="Description"] .key {
@@ -68,7 +66,8 @@ body, html {
 
 #drawer .key[data-key="Name"] + .value {
   font-size: 34px;
-  font-weight: 900;
+  font-weight: 100;
+  letter-spacing: 3px;
 }
 
 #drawer .key[data-key="Author"],
