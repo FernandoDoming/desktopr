@@ -36,8 +36,7 @@
 #drawer .top-bar {
   position: relative;
   padding: 15px;
-  margin-bottom: 60px;
-  background-color: #3F51B5;
+  background-color: #313f8e;
   color: white;
 }
 
@@ -58,4 +57,101 @@
 #drawer #close-drawer {
   cursor: pointer;
   padding: 5px;
+}
+
+
+#drawer .important-details {
+  background-color: #313f8e;
+  padding: 30px 0;
+}
+
+#drawer .grouped-entries {
+  padding: 20px 0;
+  background-color: #3F51B5;
+  text-align: center;
+  margin: 0;
+}
+
+#drawer .entry {
+  padding: 10px 25px;
+}
+
+#drawer #more-details .entry{
+  padding: 5px 25px;
+}
+
+#drawer .key {
+  font-weight: 500;
+  margin-right: 10px;
+  color: rgba(255,255,255,0.7);
+}
+
+#drawer .value {
+  font-weight: 700;
+  color: white;
+}
+
+#drawer .sidebar-section {
+  margin: 30px 15px;
+}
+
+#drawer .grouped-entries .entry {
+  padding: 4px 25px;
+}
+
+#drawer .grouped-entries .key {
+  font-weight: 500;
+}
+
+#drawer .entry[data-key="Description"] .key {
+  display: none;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+#drawer .entry[data-key="Description"] .value {
+  font-weight: 500;
+}
+
+#drawer .entry[data-key="User"] {
+  text-align: center;
+  padding: 15px 25px 45px 25px;
+}
+
+#drawer .key[data-key="Name"] {
+  display: none;
+}
+
+#drawer .key[data-key="Name"] + .value {
+  font-size: 34px;
+  font-weight: 100;
+  letter-spacing: 3px;
+}
+
+#drawer .key[data-key="Author"],
+#drawer .key[data-key="Author"] + .value  {
+  font-size: 24px;
+}
+
+#drawer #rating-details {
+  text-align: center;
+  border-bottom: none;
+  padding-top: 50px;
+}
+
+#drawer #rating-details .key {
+  margin-right: 0;
+}
+
+#drawer #rating-details .value {
+  font-size: 20px;
+  font-weight: 900;
+  margin-top: 5px;
+}
+
+#drawer .userpic {
+  max-width: 70px;
+  max-height: 70px;
+  border-radius: 100%;
+  margin-bottom: 10px
 }

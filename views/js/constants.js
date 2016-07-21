@@ -1,6 +1,6 @@
 let CONSTANTS = {
   PHOTOS: {
-    IMPORTANT_DETAILS: ['name', 'description', 'user'],
+    IMPORTANT_DETAILS: ['user', 'name', 'description'],
     RATING_DETAILS: ['times_viewed', 'rating', 'favorites_count'],
     PHOTOGRAPHY_DETAILS: ['camera', 'lens', 'focal_length', 'iso', 'shutter_speed', 'aperture'],
     PALETTE: ['colors'],
