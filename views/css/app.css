@@ -23,7 +23,7 @@ p, *[data-no-drag="true"] {
 
 .subtle {
   color: rgba(255,255,255,0.6);
-  font-weight: 900;
+  font-weight: 700;
 }
 
 .opaque {

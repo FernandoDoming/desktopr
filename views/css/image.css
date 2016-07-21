@@ -13,11 +13,12 @@ body, html {
 
 .tag {
   padding: 5px 10px;
-  background-color: #3F51B5;
+  background-color: #373373;
   color: white;
   border-radius: 3px;
   line-height: 32px;
   font-weight: 900;
+  white-space: nowrap;
 }
 
 #bottom-palette {

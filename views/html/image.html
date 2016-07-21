@@ -30,6 +30,7 @@
     <script id="displayable_details_template" type="text/x-handlebars-template">
       <div id="more-details" class="sidebar-section">
         <h4 class="subtle">More details</h4>
+        <hr align="left" />
         {{#each entries}}
         <div class="entry">
           <span class="key" data-key="{{ this.key }}">{{ this.key }}</span>
@@ -74,7 +75,7 @@
             <i class="fa fa-heart" style="color: rgba(218, 0, 0, 0.7)"></i>
           {{/if_eq}}
           {{#if_eq this.key "Times viewed"}}
-            <i class="fa fa-eye" style="opacity: 0.7"></i>
+            <i class="fa fa-eye" style="opacity: 0.7; color: white;"></i>
           {{/if_eq}}
           {{#if_eq this.key "Rating"}}
             <i class="fa fa-star-half-o" style="color: #F3BA2E"></i>
@@ -89,6 +90,7 @@
     <script id="tags_template" type="text/x-handlebars-template">
       <div class="sidebar-section">
         <h4 class="subtle">Tags</h4>
+        <hr align="left" />
         {{#each entries}}
           {{#each this.value }}
             <span class="tag">{{ this }}</span>
@@ -100,6 +102,7 @@
     <script id="palette_template" type="text/x-handlebars-template">
       <div class="sidebar-section">
         <h4 class="subtle">Color Palette</h4>
+        <hr align="left" />
         <div class="palette"></div>
       </div>
     </script>
