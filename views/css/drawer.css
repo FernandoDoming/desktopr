@@ -65,6 +65,10 @@
   margin-top: 0;
 }
 
+#drawer .progress {
+  height: 30px;
+}
+
 #drawer .important-details {
   background-color: #313f8e;
   padding: 30px 0;
