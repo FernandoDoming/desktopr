@@ -2,7 +2,7 @@
 
 Get desktop background images directly from 500px to your desktop.
 
-![Desktopr](http://fernandodominguez.me/assets/images/latest.gif)
+![Desktopr](http://fernandodominguez.me/assets/images/desktopr_trans.png)
 
 ## Installation
 
